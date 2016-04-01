@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/White"
+    tools:context="com.needham.thomas.medicare.root.Activities.HomeActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_menu_title"
+        android:id="@+id/menu_title"
+        android:textSize="26sp"
+        android:textColor="@color/Black"
+        android:layout_gravity="center_horizontal|top"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/new_reading"
+        android:id="@+id/btnNewReading"
+        android:layout_gravity="center_horizontal|top"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/view_readings"
+        android:id="@+id/btn_ViewReadings"
+        android:layout_gravity="center_horizontal|top"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/customise_interface"
+        android:id="@+id/btnCustomise"
+        android:layout_gravity="center_horizontal|top"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/admin_control_panel"
+        android:id="@+id/btnAdminControl"
+        android:layout_gravity="center_horizontal|top"/>
+</FrameLayout>

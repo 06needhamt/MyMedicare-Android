@@ -21,6 +21,10 @@
         </activity>
         <activity android:name=".root.Activities.RegisterActivity">
         </activity>
+        <activity android:name=".root.Activities.HomeActivity">
+        </activity>
+        <activity android:name=".root.Activities.NewRecordActivity">
+        </activity>
     </application>
 
 </manifest>

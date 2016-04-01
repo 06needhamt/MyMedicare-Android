@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/White"
+    tools:context="com.needham.thomas.medicare.root.Activities.NewRecordActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_record_title"
+        android:id="@+id/newRecordTitle"
+        android:layout_gravity="center_horizontal|top"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:id="@+id/rgdTemperatureUnit"
+        android:orientation="horizontal">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/celcius_unit"
+            android:id="@+id/rdbCelcius"
+            android:layout_gravity="center_horizontal|top"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fahrenheit_unit"
+            android:id="@+id/rdbFarenheight"
+            android:layout_gravity="center_horizontal|top"/>
+    </RadioGroup>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/txtTemperature"
+        android:layout_gravity="center_horizontal|top"
+        android:hint="@string/temperature_hint"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/txtBloodPressureLow"
+        android:layout_gravity="center_horizontal|top"
+        android:hint="@string/blood_pressure_low_hint"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/txtBloodPressureHigh"
+        android:layout_gravity="center_horizontal|top"
+        android:hint="@string/blood_pressure_high_hint"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/txtHeartRate"
+        android:layout_gravity="center_horizontal|top"
+        android:hint="@string/heart_rate_hint"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"
+        android:id="@+id/btnNewRecordSubmit"
+        android:layout_gravity="center_horizontal|top"/>
+</FrameLayout>

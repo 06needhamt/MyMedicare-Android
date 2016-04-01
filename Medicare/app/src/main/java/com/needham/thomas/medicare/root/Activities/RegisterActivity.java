@@ -218,8 +218,10 @@ public class RegisterActivity extends FragmentActivity implements IAppConstants,
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(details);
             Log.e("File Size", String.valueOf(file.length()));
-            if(!user.getUserName().equals("admin")) // Don't show registration message for admin
+            if(!user.getUserName().equals("admin")) { // Don't show registration message for admin
                 Toast.makeText(getBaseContext(), "User successfully registered", Toast.LENGTH_LONG).show();
+                finish();
+            }
 
         }
         catch (IOException ex){

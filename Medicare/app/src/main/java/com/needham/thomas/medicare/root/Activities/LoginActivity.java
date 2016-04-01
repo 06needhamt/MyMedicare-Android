@@ -2,6 +2,7 @@ package com.needham.thomas.medicare.root.Activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -81,6 +82,14 @@ public class LoginActivity extends FragmentActivity implements IAppConstants, IC
                 Log.e("Login", "User " + txtUsername.getText().toString() + " Successfully logged in");
                 Toast.makeText(getBaseContext(), "User " + txtUsername.getText().toString()
                         + " Successfully logged in",Toast.LENGTH_LONG).show();
+                Intent i = new Intent(getBaseContext(), HomeActivity.class);
+                Bundle userDetails = new Bundle();
+                userDetails.putString(USER_NAME_KEY,txtUsername.getText().toString());
+                userDetails.putString(USER_PASSWORD_KEY, txtUsername.getText().toString());
+                userDetails.putString(FROM_KEY, "LoginActivity");
+                i.putExtras(userDetails);
+                startActivity(i);
+                finish();
             }
         });
     }

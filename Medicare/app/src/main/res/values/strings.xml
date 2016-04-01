@@ -18,6 +18,18 @@
     <string name="user_name_hint">User Name...</string>
     <string name="full_name_hint">Full Name...</string>
     <string name="re_enter_password_hint">Re EnterPassword...</string>
+    <string name="main_menu_title">Main Menu</string>
+    <string name="new_reading"> Input New Reading</string>
+    <string name="view_readings"> View Old Readings</string>
+    <string name="customise_interface"> Customise interface</string>
+    <string name="admin_control_panel"> Admin Control Panel</string>
+    <string name="new_record_title"> Create a new Record</string>
+    <string name="celcius_unit"> Celcius &#xb0;C</string>
+    <string name="fahrenheit_unit"> Farenheit &#xb0;F</string>
+    <string name="temperature_hint"> Temperature...</string>
+    <string name="blood_pressure_low_hint"> Blood pressure Low...</string>
+    <string name="blood_pressure_high_hint"> Blood pressure High...</string>
+    <string name="heart_rate_hint"> Heart Rate...</string>
 
 
 </resources>
