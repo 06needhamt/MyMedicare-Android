@@ -33,10 +33,9 @@ public class InvalidInputDialogFragment extends DialogFragment implements Dialog
     }
 
     /**
-     * Required constructor definition DO NOT USE
+     * Required constructor definition
      */
-    @Deprecated
-    private InvalidInputDialogFragment(String Message) {
+    public InvalidInputDialogFragment(String Message) {
         this.Message = Message;
     }
 
