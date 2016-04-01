@@ -43,6 +43,18 @@ public class MainActivity extends FragmentActivity {
         SetupLoginButtonLayout();
         SetupRegisterButtonLayout();
         SetupLoginOnClick();
+        SetupRegisterOnClick();
+    }
+
+    private void SetupRegisterOnClick() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("Click", "Register Clicked");
+                Intent i = new Intent(getBaseContext(),RegisterActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void SetupLoginOnClick() {
@@ -50,7 +62,7 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 Log.e("Click", "Login Clicked");
-                Intent i = new Intent(getBaseContext(),LoginActivity.class);
+                Intent i = new Intent(getBaseContext(), LoginActivity.class);
                 startActivity(i);
             }
         });
@@ -84,7 +96,7 @@ public class MainActivity extends FragmentActivity {
 
     /**
      * This function sets up the layout for the title text view
-     */
+    */
     private void SetupTitleLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;

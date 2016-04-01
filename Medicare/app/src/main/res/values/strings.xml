@@ -7,4 +7,14 @@
     <string name="username_hint">Username...</string>
     <string name="password_hint">Password...</string>
     <string name="submit">Submit</string>
+    <string name="register_title">Please Register Here</string>
+    <string name="first_name_hint">First Name...</string>
+    <string name="last_name_hint">Last Name...</string>
+    <string name="age_hint">Age...</string>
+    <string name="address1_hint">Address 1...</string>
+    <string name="address2_hint">Address 2...</string>
+    <string name="phone_number_hint">Phone Number...</string>
+    <string name="nurse_name_hint">Nurse Name...</string>
+
+
 </resources>

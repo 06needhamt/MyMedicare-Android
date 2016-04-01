@@ -1,7 +1,6 @@
 package com.needham.thomas.medicare;
 
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -17,7 +16,7 @@ public class LoginActivity extends FragmentActivity {
     private TextView title;
     private EditText txtUsername;
     private EditText txtPassword;
-    private Button btnSubmit;
+    private Button btnLoginSubmit;
     private DisplayMetrics dm;
 
     @Override
@@ -36,7 +35,7 @@ public class LoginActivity extends FragmentActivity {
         title = (TextView) findViewById(R.id.login_title);
         txtUsername = (EditText) findViewById(R.id.txtUsername);
         txtPassword = (EditText) findViewById(R.id.txtPassword);
-        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        btnLoginSubmit = (Button) findViewById(R.id.btnLoginSubmit);
         SetupTitleLayout();
         SetupUsernameLayout();
         SetupPasswordLayout();
@@ -53,8 +52,8 @@ public class LoginActivity extends FragmentActivity {
         params.width = FrameLayout.LayoutParams.MATCH_PARENT;
         params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
         params.topMargin = (int) (height * 0.60);
-        btnSubmit.setGravity(Gravity.CENTER);
-        btnSubmit.setLayoutParams(params);
+        btnLoginSubmit.setGravity(Gravity.CENTER);
+        btnLoginSubmit.setLayoutParams(params);
     }
 
     /**
