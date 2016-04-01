@@ -1,85 +1,86 @@
 package com.needham.thomas.medicare;
 
-import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
-import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-public class MainActivity extends FragmentActivity {
+public class LoginActivity extends FragmentActivity {
 
     private int width;
     private int height;
-    private DisplayMetrics dm;
     private TextView title;
-    private Button btnRegister;
-    private Button btnLogin;
+    private EditText txtUsername;
+    private EditText txtPassword;
+    private Button btnSubmit;
+    private DisplayMetrics dm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         dm = new DisplayMetrics();
         GetDisplayMetrics(dm);
         SetupViews();
-
     }
 
     /**
-     * This function sets up the user interface
+     * This function sets up the login activity user interface
      */
     private void SetupViews() {
-        title = (TextView) findViewById(R.id.welcome);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnRegister = (Button) findViewById(R.id.btnRegister);
+        title = (TextView) findViewById(R.id.login_title);
+        txtUsername = (EditText) findViewById(R.id.txtUsername);
+        txtPassword = (EditText) findViewById(R.id.txtPassword);
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
         SetupTitleLayout();
-        SetupLoginButtonLayout();
-        SetupRegisterButtonLayout();
-        SetupLoginOnClick();
-    }
+        SetupUsernameLayout();
+        SetupPasswordLayout();
+        SetupSubmitLayout();
 
-    private void SetupLoginOnClick() {
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("Click", "Login Clicked");
-                Intent i = new Intent(getBaseContext(),LoginActivity.class);
-                startActivity(i);
-            }
-        });
     }
 
     /**
-     * This function sets up layout for the register button
+     * This function sets up the submit button layout
      */
-    private void SetupRegisterButtonLayout() {
+    private void SetupSubmitLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
         params.width = FrameLayout.LayoutParams.MATCH_PARENT;
         params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
-        params.topMargin = (int) (height * 0.50);
-        btnRegister.setGravity(Gravity.CENTER);
-        btnRegister.setLayoutParams(params);
+        params.topMargin = (int) (height * 0.60);
+        btnSubmit.setGravity(Gravity.CENTER);
+        btnSubmit.setLayoutParams(params);
     }
 
     /**
-     * This function sets up the layout for the login button
+     * This function sets up layout for the password edit text
      */
-    private void SetupLoginButtonLayout() {
+    private void SetupPasswordLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
         params.width = FrameLayout.LayoutParams.MATCH_PARENT;
         params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
         params.topMargin = (int) (height * 0.40);
-        btnLogin.setGravity(Gravity.CENTER);
-        btnLogin.setLayoutParams(params);
+        txtPassword.setGravity(Gravity.CENTER);
+        txtPassword.setLayoutParams(params);
+    }
+
+    /**
+     * This function sets up layout for the username edit text
+     */
+    private void SetupUsernameLayout() {
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
+        params.topMargin = (int) (height * 0.30);
+        txtUsername.setGravity(Gravity.CENTER);
+        txtUsername.setLayoutParams(params);
     }
 
     /**
@@ -94,7 +95,6 @@ public class MainActivity extends FragmentActivity {
         title.setGravity(Gravity.CENTER);
         title.setLayoutParams(params);
     }
-
     /**
      * gets the screen width and size for dynamic creation of the ui
      * @param dm the display metrics object to store the values in

@@ -3,4 +3,8 @@
     <string name="welcome">Welcome to My Medicare!</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="login_title">Please Login Here</string>
+    <string name="username_hint">Username...</string>
+    <string name="password_hint">Password...</string>
+    <string name="submit">Submit</string>
 </resources>
