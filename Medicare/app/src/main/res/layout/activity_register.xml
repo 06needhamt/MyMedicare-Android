@@ -22,6 +22,13 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/txtRegisterUsername"
+        android:layout_gravity="center_horizontal|top"
+        android:hint="@string/user_name_hint"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/txtRegisterFirstName"
         android:layout_gravity="center_horizontal|top"
         android:hint="@string/first_name_hint"/>
@@ -71,12 +78,27 @@
         android:layout_gravity="center_horizontal|top"
         android:hint="@string/nurse_name_hint"/>
 
-    <Button
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/txtRegisterPassword"
+        android:layout_gravity="center_horizontal|top"
+        android:inputType="textPassword"
+        android:hint="@string/password_hint"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtRegisterReenterPassword"
+        android:layout_gravity="center_horizontal|top"
+        android:inputType="textPassword"
+        android:hint="@string/re_enter_password_hint"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
         android:text="@string/submit"
         android:id="@+id/btnRegisterSubmit"
         android:layout_gravity="center_horizontal|top"/>
-
 
 </FrameLayout>

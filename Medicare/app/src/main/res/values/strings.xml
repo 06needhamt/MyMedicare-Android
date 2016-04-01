@@ -15,6 +15,9 @@
     <string name="address2_hint">Address 2...</string>
     <string name="phone_number_hint">Phone Number...</string>
     <string name="nurse_name_hint">Nurse Name...</string>
+    <string name="user_name_hint">User Name...</string>
+    <string name="full_name_hint">Full Name...</string>
+    <string name="re_enter_password_hint">Re EnterPassword...</string>
 
 
 </resources>

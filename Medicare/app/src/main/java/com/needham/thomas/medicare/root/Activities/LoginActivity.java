@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.needham.thomas.medicare.R;
 
+/**
+ * Created by Thomas Needham on 01/04/2016.
+ */
 public class LoginActivity extends FragmentActivity {
 
     private int width;
