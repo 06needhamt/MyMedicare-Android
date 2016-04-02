@@ -16,6 +16,8 @@
         android:layout_height="wrap_content"
         android:text="@string/new_record_title"
         android:id="@+id/newRecordTitle"
+        android:textSize="26sp"
+        android:textColor="@color/Black"
         android:layout_gravity="center_horizontal|top"/>
 
     <RadioGroup
@@ -24,21 +26,28 @@
         android:layout_gravity="center_horizontal|top"
         android:id="@+id/rgdTemperatureUnit"
         android:orientation="horizontal">
+
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/celcius_unit"
+            android:textColor="@color/Black"
             android:id="@+id/rdbCelcius"
-            android:layout_gravity="center_horizontal|top"/>
+            android:checked="true"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fahrenheit_unit"
+            android:textColor="@color/Black"
             android:id="@+id/rdbFarenheight"
-            android:layout_gravity="center_horizontal|top"/>
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"/>
     </RadioGroup>
-
 
     <EditText
         android:layout_width="match_parent"

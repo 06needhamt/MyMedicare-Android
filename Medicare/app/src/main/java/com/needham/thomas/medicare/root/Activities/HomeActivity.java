@@ -1,5 +1,6 @@
 package com.needham.thomas.medicare.root.Activities;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -95,6 +96,8 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
             @Override
             public void onClick(View v) {
                 Log.e("Home", "New record button clicked");
+                Intent i = new Intent(getBaseContext(), NewRecordActivity.class);
+                startActivity(i);
             }
         });
     }
