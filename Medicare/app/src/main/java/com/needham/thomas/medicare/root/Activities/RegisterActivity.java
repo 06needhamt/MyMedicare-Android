@@ -198,7 +198,6 @@ public class RegisterActivity extends FragmentActivity implements IAppConstants,
                         return true;
                     }
                     if(u.getUserName().equals(user.getUserName())){
-                        //TODO handle duplicate users
                         Log.e("n", "duplicate");
                         InvalidInputDialogFragment frag = new InvalidInputDialogFragment("Username is already taken",this);
                         frag.show(getFragmentManager(), "dia");

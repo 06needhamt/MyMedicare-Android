@@ -43,7 +43,7 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
 
     private void UnpackBundle() {
         Bundle b = getIntent().getExtras();
-        currentUser = b.getString(USER_NAME_KEY);
+        currentUser = b.getString(USER_NAME_KEY,"");
         // password and other details will be needed later
     }
 
@@ -97,6 +97,10 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
             public void onClick(View v) {
                 Log.e("Home", "New record button clicked");
                 Intent i = new Intent(getBaseContext(), NewRecordActivity.class);
+                Bundle data = new Bundle();
+                data.putString(FROM_KEY,"HomeActivity");
+                data.putString(USER_NAME_KEY,currentUser);
+                i.putExtras(data);
                 startActivity(i);
             }
         });
