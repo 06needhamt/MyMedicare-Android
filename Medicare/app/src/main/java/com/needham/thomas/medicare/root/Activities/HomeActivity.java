@@ -41,12 +41,26 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
 
     }
 
+    /**
+     * This function unpacks the bundle containing the username of the currently logged in user
+     */
     private void UnpackBundle() {
         Bundle b = getIntent().getExtras();
-        currentUser = b.getString(USER_NAME_KEY,"");
+        if(b == null)
+            throw new Error("null bundle found");
+        if(b.getString(FROM_KEY,"").equals("HomeActivity")){
+            currentUser = b.getString(USER_NAME_KEY,"");
+            if(currentUser.equals(""))
+                throw new Error("Invalid user logged in");
+        }
+        else
+            throw new Error("Invalid bundle Found");
         // password and other details will be needed later
     }
 
+    /**
+     * this function sets up the user interface for home activity
+     */
     private void SetupViews() {
         title = (TextView) findViewById(R.id.menu_title);
         btnNewRecord = (Button) findViewById(R.id.btnNewReading);
@@ -64,6 +78,9 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         SetupAdminControlOnClick();
     }
 
+    /**
+     * On click listener for the admin control button
+     */
     private void SetupAdminControlOnClick() {
         btnAdminControl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +90,9 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         });
     }
 
+    /**
+     * On click listener for the customise button
+     */
     private void SetupCutomiseOnClick() {
         btnCustomize.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +102,9 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         });
     }
 
+    /**
+     * On click listener for the view records button
+     */
     private void SetupViewRecordOnClick() {
         btnViewRecords.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +114,9 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         });
     }
 
+    /**
+     * On click listener for the new record button
+     */
     private void SetupNewRecordOnClick() {
         btnNewRecord.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +132,9 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         });
     }
 
+    /**
+     * This function sets up the layout for the admin control button
+     */
     private void SetupAdminControlLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -116,6 +145,9 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         btnAdminControl.setLayoutParams(params);
     }
 
+    /**
+     * This function sets up the layout for the customise layout button
+     */
     private void SetupCustomizeLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -126,6 +158,9 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         btnCustomize.setLayoutParams(params);
     }
 
+    /**
+     * This function sets up the layout for the new record button
+     */
     private void SetupNewRecordLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -136,6 +171,9 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         btnNewRecord.setLayoutParams(params);
     }
 
+    /**
+     * This function sets up the layout for the view record button
+     */
     private void SetupViewRecordLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -146,6 +184,9 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         btnViewRecords.setLayoutParams(params);
     }
 
+    /**
+     * This function sets up the layout for the title
+     */
     private void SetupTitleLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;

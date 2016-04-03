@@ -49,6 +49,9 @@ public class MainActivity extends FragmentActivity {
         SetupRegisterOnClick();
     }
 
+    /**
+     * On click listener for the register button
+     */
     private void SetupRegisterOnClick() {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +63,9 @@ public class MainActivity extends FragmentActivity {
         });
     }
 
+    /**
+     * On click listener for the login button
+     */
     private void SetupLoginOnClick() {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

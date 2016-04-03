@@ -3,7 +3,6 @@ package com.needham.thomas.medicare.root.Activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -62,6 +61,9 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
         SetupViews();
     }
 
+    /**
+     * This function unpacks the bundle containing the username of the currently logged in user
+     */
     private void UnpackBundle() {
         Bundle b = getIntent().getExtras();
         if(b == null)
@@ -75,6 +77,9 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
             throw new Error("Invalid bundle Found");
     }
 
+    /**
+     * This function sets up the new record user interface
+     */
     private void SetupViews() {
         title = (TextView) findViewById(R.id.newRecordTitle);
         rdgTemperatureUnit = (RadioGroup) findViewById(R.id.rgdTemperatureUnit);
@@ -95,12 +100,15 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
         SetupSubmitOnClick();
     }
 
+    /**
+     * On click listener for the submit button
+     */
     private void SetupSubmitOnClick() {
         btnNewRecordSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("New Record", "Submit button clicked");
-                Record r = ParseRecord();
+                Record r = CreateRecord();
                 if(!WriteRecord(r)){
                     throw new Error("An Error occurred while writing the record to a file");
                 }
@@ -109,6 +117,11 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
         });
     }
 
+    /**
+     * This function writes a record to the records file
+     * @param r the record to write
+     * @return whether the operation succeeded
+     */
     private boolean WriteRecord(Record r) {
 
         try {
@@ -150,7 +163,11 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
         return true;
     }
 
-    private Record ParseRecord() {
+    /**
+     * This function creates a record object from the inputted values
+     * @return the created object
+     */
+    private Record CreateRecord() {
         Record r;
         EnumTemperatureUnit unit;
         if(rdbCelcius.isChecked())
@@ -173,6 +190,10 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
         return r;
     }
 
+    /**
+     * This function gets the currently logged in user
+     * @return the user object for the currently logged user
+     */
     private User GetLoggedInUser() {
         UserDetails details = ReadUsers();
         if(details == null)
@@ -184,6 +205,15 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
         throw new Error("User: " + currentUser + " Not found");
     }
 
+    /**
+     * This function calculates the risk level for the current record
+     * @param unit the unit of temperature  i.e. Celcius or Farenheit
+     * @param temperature the temperature value
+     * @param bloodlow the low blood pressure reading
+     * @param bloodhigh the high blood pressure reading
+     * @param heartRate the heart rate reading
+     * @return the calculated risk level i.e. low medium or high
+     */
     private EnumRiskLevel CalculateRiskLevel(EnumTemperatureUnit unit, double temperature, int bloodlow, int bloodhigh, int heartRate) {
         if(unit == EnumTemperatureUnit.FAHRENHEIT){
             if(temperature <= 98.6 && bloodlow < 80 && bloodhigh < 120 && heartRate <= 72)
@@ -208,6 +238,11 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
                 return EnumRiskLevel.HIGH;
         }
     }
+
+    /**
+     * This function reads all currently registered users from the user file
+     * @return an object containing a list of all users
+     */
     private UserDetails ReadUsers() {
         try {
             File file = new File(getFilesDir(), USER_FILE_NAME);
@@ -233,6 +268,9 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
         return null;
     }
 
+    /**
+     * this function sets up the user interface for the submit button
+     */
     private void SetupSubmitLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -243,6 +281,9 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
         btnNewRecordSubmit.setLayoutParams(params);
     }
 
+    /**
+     * This function sets up the user interface for the heart rate edit text
+     */
     private void SetupHeartRateLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -252,7 +293,9 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
         txtHeartRate.setGravity(Gravity.CENTER);
         txtHeartRate.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the user interface for the blood pressure high edit text
+     */
     private void SetupBloodPressureHighLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -262,7 +305,9 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
         txtBloodPressureHigh.setGravity(Gravity.CENTER);
         txtBloodPressureHigh.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the user interface for the blood pressure low edit text
+     */
     private void SetupBloodPressureLowLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -272,7 +317,9 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
         txtBloodPressureLow.setGravity(Gravity.CENTER);
         txtBloodPressureLow.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the user interface for the temperature edit text
+     */
     private void SetupTemperatureLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -282,7 +329,9 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
         txtTemperature.setGravity(Gravity.CENTER);
         txtTemperature.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the user interface for the temperature unit radio buttons
+     */
     private void SetupRadioButtonLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -292,7 +341,9 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
         rdgTemperatureUnit.setGravity(Gravity.CENTER);
         rdgTemperatureUnit.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the user interface for the title
+     */
     private void SetupTitleLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
