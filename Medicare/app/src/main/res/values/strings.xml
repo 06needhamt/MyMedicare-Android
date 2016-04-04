@@ -32,6 +32,7 @@
     <string name="heart_rate_hint"> Heart Rate...</string>
     <string name="view_records_title"> View Your Records</string>
     <string name="delete_record">Delete Record</string>
+    <string name="logout">Logout</string>
 
 
 </resources>

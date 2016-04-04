@@ -47,4 +47,11 @@
         android:text="@string/admin_control_panel"
         android:id="@+id/btnAdminControl"
         android:layout_gravity="center_horizontal|top"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/logout"
+        android:id="@+id/btnLogout"
+        android:layout_gravity="center_horizontal|top"/>
 </FrameLayout>

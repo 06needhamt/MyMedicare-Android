@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.needham.thomas.medicare.R;
 import com.needham.thomas.medicare.root.Classes.IAppConstants;
@@ -26,6 +27,7 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
     Button btnViewRecords;
     Button btnCustomize;
     Button btnAdminControl;
+    Button btnLogout;
 
     private String currentUser;
 
@@ -67,6 +69,7 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         btnViewRecords = (Button) findViewById(R.id.btn_ViewReadings);
         btnCustomize = (Button) findViewById(R.id.btnCustomise);
         btnAdminControl = (Button) findViewById(R.id.btnAdminControl);
+        btnLogout = (Button) findViewById(R.id.btnLogout);
         SetupTitleLayout();
         SetupNewRecordLayout();
         SetupViewRecordLayout();
@@ -76,6 +79,30 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         SetupViewRecordOnClick();
         SetupCutomiseOnClick();
         SetupAdminControlOnClick();
+        SetupLogoutLayout();
+        SetupLogoutOnClick();
+    }
+
+    private void SetupLogoutOnClick() {
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("logout", "Logout button clicked");
+                currentUser = "";
+                finish();
+                Toast.makeText(getBaseContext(), "User Successfully logged out", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void SetupLogoutLayout() {
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
+        params.topMargin = (int) (height * 0.75);
+        btnLogout.setGravity(Gravity.CENTER);
+        btnLogout.setLayoutParams(params);
     }
 
     /**
