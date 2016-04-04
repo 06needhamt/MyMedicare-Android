@@ -113,6 +113,7 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
                     throw new Error("An Error occurred while writing the record to a file");
                 }
                 Toast.makeText(getBaseContext(),"Record successfully saved", Toast.LENGTH_LONG).show();
+                finish();
             }
         });
     }

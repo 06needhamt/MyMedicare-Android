@@ -25,6 +25,8 @@
         </activity>
         <activity android:name=".root.Activities.NewRecordActivity">
         </activity>
+        <activity android:name=".root.Activities.ViewRecordActivity">
+        </activity>
     </application>
 
 </manifest>

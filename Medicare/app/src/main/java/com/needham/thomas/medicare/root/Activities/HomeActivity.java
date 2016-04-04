@@ -48,7 +48,7 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         Bundle b = getIntent().getExtras();
         if(b == null)
             throw new Error("null bundle found");
-        if(b.getString(FROM_KEY,"").equals("HomeActivity")){
+        if(b.getString(FROM_KEY,"").equals("LoginActivity")){
             currentUser = b.getString(USER_NAME_KEY,"");
             if(currentUser.equals(""))
                 throw new Error("Invalid user logged in");
@@ -110,6 +110,12 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
             @Override
             public void onClick(View v) {
                 Log.e("Home", "View Record button clicked");
+                Bundle b = new Bundle();
+                b.putString(FROM_KEY, "HomeActivity");
+                b.putString(USER_NAME_KEY,currentUser);
+                Intent i = new Intent(getBaseContext(),ViewRecordActivity.class);
+                i.putExtras(b);
+                startActivity(i);
             }
         });
     }
