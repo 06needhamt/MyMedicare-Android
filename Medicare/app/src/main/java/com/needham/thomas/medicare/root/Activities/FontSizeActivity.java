@@ -43,6 +43,9 @@ public class FontSizeActivity extends FragmentActivity implements IAppConstants 
         SetupViews();
     }
 
+    /**
+     * This function unpacks the bundle containing the currently logged in user's username
+     */
     private void UnpackBundle() {
         Bundle b = getIntent().getExtras();
         if(b == null)
@@ -55,6 +58,10 @@ public class FontSizeActivity extends FragmentActivity implements IAppConstants 
         else
             throw new Error("Invalid bundle Found");
     }
+
+    /**
+     * This function sets up the user interface for the FontSizeActivity
+     */
     private void SetupViews() {
         title = (TextView) findViewById(R.id.fontSize_Title);
         btnSmall = (Button) findViewById(R.id.btnSmallFont);
@@ -98,17 +105,11 @@ public class FontSizeActivity extends FragmentActivity implements IAppConstants 
         return null;
     }
 
-    private void SetupLargeFontOnClick() {
-        btnLarge.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("customisation", "Large Font button Clicked");
-                UserDetails users = ReadUsers();
-                SetFontSize(btnLarge.getTextSize(), users);
-            }
-        });
-    }
-
+    /**
+     * This function sets the font size to the chosen size for the currently logged in user
+     * @param textSize the chosen font size
+     * @param users the user list
+     */
     private void SetFontSize(float textSize, UserDetails users) {
         for(User u : users.getUserinfo()){
             if(u.getUserName().equals(currentUser)){
@@ -121,6 +122,22 @@ public class FontSizeActivity extends FragmentActivity implements IAppConstants 
         throw new Error("User " + currentUser + " not found");
     }
 
+    /**
+     * On Click Listener for the Large Font button
+     */
+    private void SetupLargeFontOnClick() {
+        btnLarge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("customisation", "Large Font button Clicked");
+                UserDetails users = ReadUsers();
+                SetFontSize(btnLarge.getTextSize(), users);
+            }
+        });
+    }
+    /**
+     * On Click Listener for the Medium Font button
+     */
     private void SetupMediumFontOnClick() {
         btnMedium.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +146,9 @@ public class FontSizeActivity extends FragmentActivity implements IAppConstants 
             }
         });
     }
-
+    /**
+     * On Click Listener for the Small Font button
+     */
     private void SetupSmallFontOnClick() {
         btnSmall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +158,9 @@ public class FontSizeActivity extends FragmentActivity implements IAppConstants 
         });
     }
 
+    /**
+     * This function sets up the user interface for the large font button
+     */
     private void SetupLargeFontLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -148,7 +170,9 @@ public class FontSizeActivity extends FragmentActivity implements IAppConstants 
         btnLarge.setGravity(Gravity.CENTER);
         btnLarge.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the user interface for the medium font button
+     */
     private void SetupMediumFontLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -158,7 +182,9 @@ public class FontSizeActivity extends FragmentActivity implements IAppConstants 
         btnMedium.setGravity(Gravity.CENTER);
         btnMedium.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the user interface for the small font button
+     */
     private void SetupSmallFontLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;

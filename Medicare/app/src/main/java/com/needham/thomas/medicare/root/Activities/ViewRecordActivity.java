@@ -69,6 +69,10 @@ public class ViewRecordActivity extends FragmentActivity implements IAppConstant
             throw new Error("Invalid bundle Found");
         // password and other details will be needed later
     }
+
+    /**
+     * This function sets up the user interface for ViewRecordActivity
+     */
     private void SetupViews() {
         title = (TextView) findViewById(R.id.viewRecordsTitle);
         lstRecordList = (ListView) findViewById(R.id.lstrecordsList);
@@ -78,6 +82,9 @@ public class ViewRecordActivity extends FragmentActivity implements IAppConstant
         SetupListItemClickListener();
     }
 
+    /**
+     * On long click listener for records held in the record list view
+     */
     private void SetupListItemClickListener() {
         lstRecordList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -90,6 +97,9 @@ public class ViewRecordActivity extends FragmentActivity implements IAppConstant
         });
     }
 
+    /**
+     * This function spawns a dialog for the user to confirm that they want to delete the selected record
+     */
     private void SpawnDialog() {
         DeleteRecordConfirmDialogFragment fragment = new DeleteRecordConfirmDialogFragment(
                 "Are You Sure You Want To Delete This Record?", this);
@@ -97,6 +107,9 @@ public class ViewRecordActivity extends FragmentActivity implements IAppConstant
 
     }
 
+    /**
+     * this function populates the list view with all records belonging to the current user in the user file
+     */
     private void PopulateListView() {
         records = GetRecords();
         ArrayList<Record> yourRecords = new ArrayList<>();
@@ -114,6 +127,10 @@ public class ViewRecordActivity extends FragmentActivity implements IAppConstant
         Log.e("list", "list successfully populated");
     }
 
+    /**
+     * This function gets all records from the user file
+     * @return all of the records stored in the user file
+     */
     private RecordList GetRecords() {
         try {
             File file = new File(getFilesDir().getAbsolutePath(), RECORD_FILE_NAME);
@@ -144,6 +161,11 @@ public class ViewRecordActivity extends FragmentActivity implements IAppConstant
 
     }
 
+    /**
+     * This function writes a list of records to the user file
+     * @param recordList the records to write
+     * @return whether the operation succeeded
+     */
     private boolean WriteRecords(RecordList recordList) {
 
         try {
@@ -170,6 +192,9 @@ public class ViewRecordActivity extends FragmentActivity implements IAppConstant
         return true;
     }
 
+    /**
+     * This function sets up the layout for the record list view
+     */
     private void SetupRecordListLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -206,11 +231,11 @@ public class ViewRecordActivity extends FragmentActivity implements IAppConstant
     /**
      * This method is called when the positive button is pressed on the dialog Fragment
      *
-     * @param pin the pin entered into the dialog fragment by the user
+     * @param input the input entered into the dialog fragment by the user
      * @see AlertDialog.Builder#setPositiveButton(CharSequence, DialogInterface.OnClickListener)
      */
     @Override
-    public void doYesConfirmClick(String pin) {
+    public void doYesConfirmClick(String input) {
         records = GetRecords();
         ListAdapter adapter = lstRecordList.getAdapter();
         ArrayList<Record> temp = records.getRecords();
@@ -223,11 +248,11 @@ public class ViewRecordActivity extends FragmentActivity implements IAppConstant
     /**
      * This method is called when the negative button is pressed on the dialog Fragment
      *
-     * @param pin the pin entered into the dialog fragment by the user
+     * @param input the input entered into the dialog fragment by the user
      * @see AlertDialog.Builder#setNegativeButton(CharSequence, DialogInterface.OnClickListener)
      */
     @Override
-    public void doNoConfirmClick(String pin) {
+    public void doNoConfirmClick(String input) {
 
     }
 }

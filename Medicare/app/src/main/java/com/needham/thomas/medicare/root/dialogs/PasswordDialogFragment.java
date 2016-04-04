@@ -16,11 +16,11 @@ import com.needham.thomas.medicare.R;
 /**
  * Created by Tom on 01/04/2016.
  * This Class creates and displays a {@link android.app.DialogFragment} which allows the user to enter
- * their 4 digit pin code
+ * their input
  */
 public class PasswordDialogFragment extends DialogFragment implements DialogInterface{
     /**
-     * The textview object that will be used to input the pin number entered by the user
+     * The textview object that will be used to input the input number entered by the user
      */
     TextView input;
     /**

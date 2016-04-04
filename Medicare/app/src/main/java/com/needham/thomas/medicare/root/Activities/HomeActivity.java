@@ -91,6 +91,9 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         ApplyUserSettings();
     }
 
+    /**
+     * On Click listener for the logout button
+     */
     private void SetupLogoutOnClick() {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,16 +104,6 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
                 Toast.makeText(getBaseContext(), "User Successfully logged out", Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    private void SetupLogoutLayout() {
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
-        params.gravity = Gravity.CENTER_HORIZONTAL;
-        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
-        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
-        params.topMargin = (int) (height * 0.75);
-        btnLogout.setGravity(Gravity.CENTER);
-        btnLogout.setLayoutParams(params);
     }
 
     /**
@@ -192,6 +185,22 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         btnAdminControl.setLayoutParams(params);
     }
 
+    /**
+     * This function sets up the layout for the logout button
+     */
+    private void SetupLogoutLayout() {
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
+        params.topMargin = (int) (height * 0.75);
+        btnLogout.setGravity(Gravity.CENTER);
+        btnLogout.setLayoutParams(params);
+    }
+
+    /**
+     * This function applies the users chosen customised settings
+     */
     private void ApplyUserSettings() {
         UserDetails users = ReadUsers();
         assert users != null;

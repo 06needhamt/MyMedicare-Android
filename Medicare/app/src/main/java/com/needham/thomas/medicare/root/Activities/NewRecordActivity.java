@@ -368,22 +368,22 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
     /**
      * This method is called when the positive button is pressed on the dialog Fragment
      *
-     * @param pin the pin entered into the dialog fragment by the user
+     * @param input the input entered into the dialog fragment by the user
      * @see AlertDialog.Builder#setPositiveButton(CharSequence, DialogInterface.OnClickListener)
      */
     @Override
-    public void doYesConfirmClick(String pin) {
+    public void doYesConfirmClick(String input) {
 
     }
 
     /**
      * This method is called when the negative button is pressed on the dialog Fragment
      *
-     * @param pin the pin entered into the dialog fragment by the user
+     * @param input the input entered into the dialog fragment by the user
      * @see AlertDialog.Builder#setNegativeButton(CharSequence, DialogInterface.OnClickListener)
      */
     @Override
-    public void doNoConfirmClick(String pin) {
+    public void doNoConfirmClick(String input) {
 
     }
 }

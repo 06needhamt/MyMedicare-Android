@@ -36,6 +36,9 @@ public class CustomisationActivity extends FragmentActivity implements IAppConst
         SetupViews();
     }
 
+    /**
+     * This function unpacks the bundle containing the username of the currently logged in user
+     */
     private void UnpackBundle() {
         Bundle b = getIntent().getExtras();
         if(b == null)
@@ -49,6 +52,9 @@ public class CustomisationActivity extends FragmentActivity implements IAppConst
             throw new Error("Invalid bundle Found");
     }
 
+    /**
+     * This function sets up the user interface for the customisation activity
+     */
     private void SetupViews() {
         title = (TextView) findViewById(R.id.customisation_Title);
         btnFontSize = (Button) findViewById(R.id.btnFontSize);
@@ -63,6 +69,9 @@ public class CustomisationActivity extends FragmentActivity implements IAppConst
         SetupBackgroundColourOnClick();
     }
 
+    /**
+     * On Click listener for the set background colour button
+     */
     private void SetupBackgroundColourOnClick() {
         btnBackgroundColour.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +80,9 @@ public class CustomisationActivity extends FragmentActivity implements IAppConst
             }
         });
     }
-
+    /**
+     * On Click listener for the set font colour button
+     */
     private void SetupFontColourOnClick() {
         btnFontColour.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +91,9 @@ public class CustomisationActivity extends FragmentActivity implements IAppConst
             }
         });
     }
-
+    /**
+     * On Click listener for the set font size button
+     */
     private void SetupFontSizeOnClick() {
         btnFontSize.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +108,9 @@ public class CustomisationActivity extends FragmentActivity implements IAppConst
             }
         });
     }
-
+    /**
+     * This function sets up the layout for the set background colour button
+     */
     private void SetupBackgroundColourLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -105,7 +120,9 @@ public class CustomisationActivity extends FragmentActivity implements IAppConst
         btnBackgroundColour.setGravity(Gravity.CENTER);
         btnBackgroundColour.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the layout for the set font colour button
+     */
     private void SetupFontColourLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -115,7 +132,9 @@ public class CustomisationActivity extends FragmentActivity implements IAppConst
         btnFontColour.setGravity(Gravity.CENTER);
         btnFontColour.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the layout for the set font size button
+     */
     private void SetupFontSizeLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
