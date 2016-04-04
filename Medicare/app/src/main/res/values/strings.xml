@@ -33,6 +33,13 @@
     <string name="view_records_title"> View Your Records</string>
     <string name="delete_record">Delete Record</string>
     <string name="logout">Logout</string>
-
+    <string name="customisation_Title"> Customise Your App</string>
+    <string name="font_size"> Font Size</string>
+    <string name="font_colour"> Font Colour</string>
+    <string name="background_colour"> Background Colour</string>
+    <string name="choose_font_size"> Choose font size</string>
+    <string name="small"> Small</string>
+    <string name="medium"> Medium</string>
+    <string name="large"> Large</string>
 
 </resources>

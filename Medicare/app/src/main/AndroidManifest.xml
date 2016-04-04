@@ -29,6 +29,8 @@
         </activity>
         <activity android:name=".root.Activities.CustomisationActivity">
         </activity>
+        <activity android:name=".root.Activities.FontSizeActivity">
+        </activity>
     </application>
 
 </manifest>

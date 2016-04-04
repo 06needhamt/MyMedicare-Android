@@ -16,6 +16,13 @@ import android.widget.Toast;
 
 import com.needham.thomas.medicare.R;
 import com.needham.thomas.medicare.root.Classes.IAppConstants;
+import com.needham.thomas.medicare.root.Classes.User;
+import com.needham.thomas.medicare.root.Classes.UserDetails;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 public class HomeActivity extends FragmentActivity implements IAppConstants {
 
@@ -81,6 +88,7 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         SetupAdminControlOnClick();
         SetupLogoutLayout();
         SetupLogoutOnClick();
+        ApplyUserSettings();
     }
 
     private void SetupLogoutOnClick() {
@@ -125,6 +133,12 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
             @Override
             public void onClick(View v) {
                 Log.e("Home", "Customise button Clicked");
+                Bundle b = new Bundle();
+                b.putString(FROM_KEY, "HomeActivity");
+                b.putString(USER_NAME_KEY, currentUser);
+                Intent i = new Intent(getBaseContext(), CustomisationActivity.class);
+                i.putExtras(b);
+                startActivity(i);
             }
         });
     }
@@ -157,8 +171,8 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
                 Log.e("Home", "New record button clicked");
                 Intent i = new Intent(getBaseContext(), NewRecordActivity.class);
                 Bundle data = new Bundle();
-                data.putString(FROM_KEY,"HomeActivity");
-                data.putString(USER_NAME_KEY,currentUser);
+                data.putString(FROM_KEY, "HomeActivity");
+                data.putString(USER_NAME_KEY, currentUser);
                 i.putExtras(data);
                 startActivity(i);
             }
@@ -176,6 +190,24 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         params.topMargin = (int) (height * 0.60);
         btnAdminControl.setGravity(Gravity.CENTER);
         btnAdminControl.setLayoutParams(params);
+    }
+
+    private void ApplyUserSettings() {
+        UserDetails users = ReadUsers();
+        assert users != null;
+        assert users.getUserinfo() != null;
+        for(User u : users.getUserinfo()){
+            if(u.getUserName().equals(currentUser)){
+                if(u.getFontSize() != 0.0f) {
+                    btnNewRecord.setTextSize(u.getFontSize());
+                    btnAdminControl.setTextSize(u.getFontSize());
+                    btnViewRecords.setTextSize(u.getFontSize());
+                    btnCustomize.setTextSize(u.getFontSize());
+                    btnLogout.setTextSize(u.getFontSize());
+                }
+                break;
+            }
+        }
     }
 
     /**
@@ -228,6 +260,35 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         params.topMargin = (int) (height * 0.01);
         title.setGravity(Gravity.CENTER);
         title.setLayoutParams(params);
+    }
+
+    /**
+     * This function reads the list of users from the file
+     * @return the list of users or null if an error occurred
+     */
+    private UserDetails ReadUsers() {
+        try {
+            File file = new File(getFilesDir(), USER_FILE_NAME);
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            return (UserDetails) objectInputStream.readObject();
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+            Log.e("ReadAppointment", "An error occurred while reading the appointment from the file");
+        }
+        catch (ClassNotFoundException cls)
+        {
+            cls.printStackTrace();
+            Log.e("ReadAppointment", "Class Not Found");
+            throw new Error("Class Not Found");
+        }
+        catch (NullPointerException npe)
+        {
+            npe.printStackTrace();
+        }
+        return null;
     }
 
     /**

@@ -16,6 +16,9 @@ public class User implements Serializable{
     private String address2;
     private String phoneNumber;
     private String nurseName;
+    private float fontSize;
+    private int fontColour;
+    private int backgroundColour;
 
     public User(String userName, String password, String firstName, String lastName, int age,
                 String address1, String address2, String phoneNumber, String nurseName) {
@@ -28,6 +31,9 @@ public class User implements Serializable{
         this.address2 = address2;
         this.phoneNumber = phoneNumber;
         this.nurseName = nurseName;
+        this.fontColour = 0;
+        this.fontSize = 0.0f;
+        this.backgroundColour = 0;
     }
 
     public String getFirstName() {
@@ -100,5 +106,29 @@ public class User implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public float getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(float fontSize) {
+        this.fontSize = fontSize;
+    }
+
+    public int getFontColour() {
+        return fontColour;
+    }
+
+    public void setFontColour(int fontColour) {
+        this.fontColour = fontColour;
+    }
+
+    public int getBackgroundColour() {
+        return backgroundColour;
+    }
+
+    public void setBackgroundColour(int backgroundColour) {
+        this.backgroundColour = backgroundColour;
     }
 }
