@@ -14,13 +14,16 @@ import android.widget.Toast;
 
 import com.needham.thomas.medicare.R;
 import com.needham.thomas.medicare.root.Classes.IAppConstants;
+import com.needham.thomas.medicare.root.Classes.RecordList;
 import com.needham.thomas.medicare.root.Classes.User;
 import com.needham.thomas.medicare.root.Classes.UserDetails;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class FontSizeActivity extends FragmentActivity implements IAppConstants {
 
@@ -106,15 +109,46 @@ public class FontSizeActivity extends FragmentActivity implements IAppConstants 
     }
 
     /**
-     * This function sets the font size to the chosen size for the currently logged in user
-     * @param textSize the chosen font size
-     * @param users the user list
+     * This function writes a list of user details to the user file
+     * @param userDetails the records to write
+     * @return whether the operation succeeded
      */
+    private boolean WriteUsers(UserDetails userDetails) {
+
+        try {
+            File file = new File(getFilesDir().getAbsolutePath(), USER_FILE_NAME);
+            if (!file.exists()) {
+                boolean newFile = file.createNewFile();
+            }
+            Log.e("File Path", file.getAbsolutePath());
+
+            Log.e("List Size", String.valueOf(userDetails.getUserinfo().size()));
+            Log.e("File Size", String.valueOf(file.length()));
+            Log.e("List Size ", String.valueOf(userDetails.getUserinfo().size()));
+            FileOutputStream fileOutputStream = new FileOutputStream(file, false);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(userDetails);
+            Log.e("File Size", String.valueOf(file.length()));
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            Log.e("WriteRecord", "An error occurred while writing the Record to a file");
+            throw new Error("\"An error occurred while writing the Record to a file\"");
+        }
+        return true;
+    }
+
+        /**
+         * This function sets the font size to the chosen size for the currently logged in user
+         * @param textSize the chosen font size
+         * @param users the user list
+         */
     private void SetFontSize(float textSize, UserDetails users) {
         for(User u : users.getUserinfo()){
             if(u.getUserName().equals(currentUser)){
                 u.setFontSize(textSize);
                 Toast.makeText(getBaseContext(),"Settings saved restart the app to view changes", Toast.LENGTH_LONG).show();
+                WriteUsers(users);
                 finish();
                 return;
             }

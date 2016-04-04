@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,13 @@ import android.widget.TextView;
 
 import com.needham.thomas.medicare.R;
 import com.needham.thomas.medicare.root.Classes.IAppConstants;
+import com.needham.thomas.medicare.root.Classes.User;
+import com.needham.thomas.medicare.root.Classes.UserDetails;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 public class CustomisationActivity extends FragmentActivity implements IAppConstants {
 
@@ -68,8 +76,59 @@ public class CustomisationActivity extends FragmentActivity implements IAppConst
         SetupFontColourOnClick();
         SetupBackgroundColourOnClick();
     }
-
     /**
+     * This function reads the list of users from the file
+     * @return the list of users or null if an error occurred
+     */
+    private UserDetails ReadUsers() {
+        try {
+            File file = new File(getFilesDir(), USER_FILE_NAME);
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            return (UserDetails) objectInputStream.readObject();
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+            Log.e("ReadAppointment", "An error occurred while reading the appointment from the file");
+        }
+        catch (ClassNotFoundException cls)
+        {
+            cls.printStackTrace();
+            Log.e("ReadAppointment", "Class Not Found");
+            throw new Error("Class Not Found");
+        }
+        catch (NullPointerException npe)
+        {
+            npe.printStackTrace();
+        }
+        return null;
+    }
+    private void ApplyUserSettings() {
+        UserDetails users = ReadUsers();
+        assert users != null;
+        assert users.getUserinfo() != null;
+        for (User u : users.getUserinfo()) {
+            if (u.getUserName().equals(currentUser)) {
+                if (u.getFontSize() != 0.0f) {
+                    btnBackgroundColour.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
+                    btnFontSize.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
+                    btnFontColour.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
+                }
+                if (u.getBackgroundColour() != 0) {
+                    getWindow().getDecorView().setBackgroundColor(getResources().getColor(u.getBackgroundColour()));
+                }
+                if (u.getFontColour() != 0) {
+                    title.setTextColor(getResources().getColor(u.getFontColour()));
+                    btnBackgroundColour.setTextColor(getResources().getColor(u.getFontColour()));
+                    btnFontSize.setTextColor(getResources().getColor(u.getFontColour()));
+                    btnFontColour.setTextColor(getResources().getColor(u.getFontColour()));
+                }
+                break;
+            }
+        }
+    }
+        /**
      * On Click listener for the set background colour button
      */
     private void SetupBackgroundColourOnClick() {

@@ -41,5 +41,10 @@
     <string name="small"> Small</string>
     <string name="medium"> Medium</string>
     <string name="large"> Large</string>
+    <string name="choose_colour"> Choose a Colour</string>
+    <string name="default_colour"> Default</string>
+    <string name="red"> Red</string>
+    <string name="green"> Green</string>
+    <string name="blue"> Blue</string>
 
 </resources>

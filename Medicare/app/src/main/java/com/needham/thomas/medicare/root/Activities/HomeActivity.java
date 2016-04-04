@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -208,11 +209,21 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         for(User u : users.getUserinfo()){
             if(u.getUserName().equals(currentUser)){
                 if(u.getFontSize() != 0.0f) {
-                    btnNewRecord.setTextSize(u.getFontSize());
-                    btnAdminControl.setTextSize(u.getFontSize());
-                    btnViewRecords.setTextSize(u.getFontSize());
-                    btnCustomize.setTextSize(u.getFontSize());
-                    btnLogout.setTextSize(u.getFontSize());
+                    btnNewRecord.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
+                    btnAdminControl.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
+                    btnViewRecords.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
+                    btnCustomize.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
+                    btnLogout.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
+                }
+                if(u.getBackgroundColour() != 0){
+                    getWindow().getDecorView().setBackgroundColor(getResources().getColor(u.getBackgroundColour()));
+                }
+                if(u.getFontColour() != 0){
+                    title.setTextColor(getResources().getColor(u.getFontColour()));
+                    btnAdminControl.setTextColor(getResources().getColor(u.getFontColour()));
+                    btnViewRecords.setTextColor(getResources().getColor(u.getFontColour()));
+                    btnCustomize.setTextColor(getResources().getColor(u.getFontColour()));
+                    btnLogout.setTextColor(getResources().getColor(u.getFontColour()));
                 }
                 break;
             }

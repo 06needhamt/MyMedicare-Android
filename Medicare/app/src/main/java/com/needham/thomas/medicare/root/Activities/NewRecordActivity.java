@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -100,6 +101,34 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
         SetupSubmitOnClick();
     }
 
+    private void ApplyUserSettings() {
+        UserDetails users = ReadUsers();
+        assert users != null;
+        assert users.getUserinfo() != null;
+        for (User u : users.getUserinfo()) {
+            if (u.getUserName().equals(currentUser)) {
+                if (u.getFontSize() != 0.0f) {
+                    txtTemperature.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
+                    txtHeartRate.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
+                    txtBloodPressureLow.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
+                    txtBloodPressureHigh.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
+
+                }
+                if (u.getBackgroundColour() != 0) {
+                    getWindow().getDecorView().setBackgroundColor(getResources().getColor(u.getBackgroundColour()));
+                }
+                if (u.getFontColour() != 0) {
+                    title.setTextColor(getResources().getColor(u.getFontColour()));
+                    txtTemperature.setTextColor(getResources().getColor(u.getFontColour()));
+                    txtHeartRate.setTextColor(getResources().getColor(u.getFontColour()));
+                    txtBloodPressureLow.setTextColor(getResources().getColor(u.getFontColour()));
+                    txtBloodPressureHigh.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
+
+                }
+                break;
+            }
+        }
+    }
     /**
      * On click listener for the submit button
      */

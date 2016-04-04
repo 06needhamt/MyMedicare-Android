@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/White"
+    tools:context="com.needham.thomas.medicare.root.Activities.ColourActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_colour"
+        android:id="@+id/ColourTitle"
+        android:textSize="26sp"
+        android:textColor="@color/Black"
+        android:layout_gravity="center_horizontal|top"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnRed"
+        android:text="@string/red"
+        android:background="@color/bg_Pink"
+        android:layout_gravity="center_horizontal|top"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnGreen"
+        android:text="@string/green"
+        android:layout_gravity="center_horizontal|top"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnBlue"
+        android:text="@string/blue"
+        android:layout_gravity="center_horizontal|top"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/default_colour"
+        android:id="@+id/btnDefault"
+        android:layout_gravity="center_horizontal|top"/>
+</FrameLayout>

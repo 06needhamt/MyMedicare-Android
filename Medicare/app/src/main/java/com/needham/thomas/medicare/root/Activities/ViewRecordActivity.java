@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +22,8 @@ import com.needham.thomas.medicare.R;
 import com.needham.thomas.medicare.root.Classes.IAppConstants;
 import com.needham.thomas.medicare.root.Classes.Record;
 import com.needham.thomas.medicare.root.Classes.RecordList;
+import com.needham.thomas.medicare.root.Classes.User;
+import com.needham.thomas.medicare.root.Classes.UserDetails;
 import com.needham.thomas.medicare.root.dialogs.DeleteRecordConfirmDialogFragment;
 import com.needham.thomas.medicare.root.dialogs.IConfirmInputDialogCompliant;
 
