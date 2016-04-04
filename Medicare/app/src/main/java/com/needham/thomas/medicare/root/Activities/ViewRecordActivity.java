@@ -93,13 +93,23 @@ public class ViewRecordActivity extends FragmentActivity implements IAppConstant
     private void SpawnDialog() {
         DeleteRecordConfirmDialogFragment fragment = new DeleteRecordConfirmDialogFragment(
                 "Are You Sure You Want To Delete This Record?", this);
-        fragment.show(getFragmentManager(),"dialog");
+        fragment.show(getFragmentManager(), "dialog");
 
     }
 
     private void PopulateListView() {
         records = GetRecords();
-        ArrayAdapter<Record> adapter = new ArrayAdapter<Record>(getBaseContext(),R.layout.list_view_text,records.getRecords());
+        ArrayList<Record> yourRecords = new ArrayList<>();
+        if(currentUser.equals("admin")){ // show all records for admin user
+            ArrayAdapter<Record> adapter = new ArrayAdapter<Record>(getBaseContext(),R.layout.list_view_text,records.getRecords());
+            lstRecordList.setAdapter(adapter);
+            return;
+        }
+        for(Record rec : records.getRecords()){ // only show records belonging to the currently logged in user if they are not admin
+            if(rec.getOwner().getUserName().equals(currentUser))
+                yourRecords.add(rec);
+        }
+        ArrayAdapter<Record> adapter = new ArrayAdapter<Record>(getBaseContext(),R.layout.list_view_text,yourRecords);
         lstRecordList.setAdapter(adapter);
         Log.e("list", "list successfully populated");
     }
