@@ -9,6 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/White"
+    android:id="@+id/homeRoot"
     tools:context="com.needham.thomas.medicare.root.Activities.HomeActivity">
 
     <TextView
@@ -44,6 +45,13 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/send_text"
+        android:id="@+id/btnSendText"
+        android:layout_gravity="center_horizontal|top"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/admin_control_panel"
         android:id="@+id/btnAdminControl"
         android:layout_gravity="center_horizontal|top"/>
@@ -54,4 +62,5 @@
         android:text="@string/logout"
         android:id="@+id/btnLogout"
         android:layout_gravity="center_horizontal|top"/>
+
 </FrameLayout>

@@ -99,6 +99,7 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
         SetupHeartRateLayout();
         SetupSubmitLayout();
         SetupSubmitOnClick();
+        ApplyUserSettings();
     }
 
     private void ApplyUserSettings() {
@@ -112,10 +113,12 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
                     txtHeartRate.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
                     txtBloodPressureLow.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
                     txtBloodPressureHigh.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
+                    btnNewRecordSubmit.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
 
                 }
                 if (u.getBackgroundColour() != 0) {
-                    getWindow().getDecorView().setBackgroundColor(getResources().getColor(u.getBackgroundColour()));
+                    FrameLayout layout = (FrameLayout) findViewById(R.id.newRecordRoot);
+                    layout.setBackgroundColor(getResources().getColor(u.getBackgroundColour()));
                 }
                 if (u.getFontColour() != 0) {
                     title.setTextColor(getResources().getColor(u.getFontColour()));
@@ -123,6 +126,7 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
                     txtHeartRate.setTextColor(getResources().getColor(u.getFontColour()));
                     txtBloodPressureLow.setTextColor(getResources().getColor(u.getFontColour()));
                     txtBloodPressureHigh.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
+                    btnNewRecordSubmit.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
 
                 }
                 break;

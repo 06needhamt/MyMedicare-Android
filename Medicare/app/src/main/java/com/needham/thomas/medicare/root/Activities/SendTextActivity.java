@@ -1,0 +1,208 @@
+package com.needham.thomas.medicare.root.Activities;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.drawable.shapes.RectShape;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+
+import com.needham.thomas.medicare.R;
+import com.needham.thomas.medicare.root.Classes.Contact;
+import com.needham.thomas.medicare.root.Classes.IAppConstants;
+import com.needham.thomas.medicare.root.Classes.ListViewBorder;
+import com.needham.thomas.medicare.root.Classes.User;
+import com.needham.thomas.medicare.root.Classes.UserDetails;
+import com.needham.thomas.medicare.root.dialogs.IConfirmInputDialogCompliant;
+import com.needham.thomas.medicare.root.dialogs.InvalidInputDialogFragment;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+
+public class SendTextActivity extends FragmentActivity implements IAppConstants, IConfirmInputDialogCompliant {
+
+    int width;
+    int height;
+    TextView title;
+    EditText txtRecipientsName;
+    EditText txtMessageBody;
+    Button btnSend;
+    ArrayList<Contact> contacts;
+    String currentUser;
+    DisplayMetrics dm;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_send_text);
+        dm = new DisplayMetrics();
+        GetDisplayMetrics(dm);
+        UnpackBundle();
+        SetupViews();
+    }
+
+    private void UnpackBundle() {
+        Bundle b = getIntent().getExtras();
+        if(b == null)
+            throw new Error("null bundle found");
+        if(b.getString(FROM_KEY,"").equals("HomeActivity")){
+            currentUser = b.getString(USER_NAME_KEY,"");
+            if(currentUser.equals(""))
+                throw new Error("Invalid user logged in");
+            contacts = b.getParcelableArrayList(CONTACTS_LIST_KEY);
+            if((contacts != null ? contacts.size() : 0) == 0){
+                InvalidInputDialogFragment fragment = new InvalidInputDialogFragment("Please ensure you have your nurse in contacts",this);
+                fragment.show(getFragmentManager(),"dia");
+            }
+        }
+        else
+            throw new Error("Invalid bundle Found");
+        // password and other details will be needed later
+    }
+
+    private void SetupViews() {
+        title = (TextView) findViewById(R.id.sendTextTitle);
+        txtRecipientsName = (EditText) findViewById(R.id.txtRecipientName);
+        txtMessageBody = (EditText) findViewById(R.id.txtMessageBody);
+        btnSend = (Button) findViewById(R.id.btnSendTextMessage);
+        SetupTitleLayout();
+        SetupRecipientsNameLayout();
+        SetupMessageBodyLayout();
+        SetupSendButtonLayout();
+        SetupSendButtonOnClick();
+        GetNurseContact();
+    }
+
+    private void GetNurseContact() {
+        UserDetails users = ReadUsers();
+        assert users != null;
+        for(User u : users.getUserinfo()){
+            for(Contact c : contacts){
+                if(c.getName().equals(u.getNurseName())){
+                    txtRecipientsName.setText(c.getName());
+                    return;
+                }
+            }
+        }
+    }
+    /**
+     * This function reads all currently registered users from the user file
+     * @return an object containing a list of all users
+     */
+    private UserDetails ReadUsers() {
+        try {
+            File file = new File(getFilesDir(), USER_FILE_NAME);
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            return (UserDetails) objectInputStream.readObject();
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+            Log.e("ReadAppointment", "An error occurred while reading the appointment from the file");
+        }
+        catch (ClassNotFoundException cls)
+        {
+            cls.printStackTrace();
+            Log.e("ReadAppointment", "Class Not Found");
+            throw new Error("Class Not Found");
+        }
+        catch (NullPointerException npe)
+        {
+            npe.printStackTrace();
+        }
+        return null;
+    }
+    private void SetupSendButtonOnClick() {
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("send message", "Send message button clicked");
+
+            }
+        });
+    }
+
+    private void SetupSendButtonLayout() {
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
+        params.topMargin = (int) (height * 0.75);
+        btnSend.setGravity(Gravity.CENTER);
+        btnSend.setLayoutParams(params);
+    }
+
+    private void SetupMessageBodyLayout() {
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+        params.height = (int) (height * 0.60);
+        params.topMargin = (int) (height * 0.10);
+        txtMessageBody.setGravity(Gravity.CENTER);
+        txtMessageBody.setBackground(new ListViewBorder(new RectShape()));
+        txtMessageBody.setLayoutParams(params);
+    }
+
+    private void SetupRecipientsNameLayout() {
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
+        params.topMargin = (int) (height * 0.10);
+        txtRecipientsName.setGravity(Gravity.CENTER);
+        txtRecipientsName.setLayoutParams(params);
+    }
+
+    private void SetupTitleLayout() {
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
+        params.topMargin = (int) (height * 0.01);
+        title.setGravity(Gravity.CENTER);
+        title.setLayoutParams(params);
+    }
+
+    /**
+     * gets the screen width and size for dynamic creation of the ui
+     * @param dm the display metrics object to store the values in
+     */
+    protected void GetDisplayMetrics(DisplayMetrics dm) {
+        this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        width = dm.widthPixels;
+        height = dm.heightPixels;
+    }
+
+    /**
+     * This method is called when the positive button is pressed on the dialog Fragment
+     *
+     * @param input the input entered into the dialog fragment by the user
+     * @see AlertDialog.Builder#setPositiveButton(CharSequence, DialogInterface.OnClickListener)
+     */
+    @Override
+    public void doYesConfirmClick(String input) {
+
+    }
+
+    /**
+     * This method is called when the negative button is pressed on the dialog Fragment
+     *
+     * @param input the input entered into the dialog fragment by the user
+     * @see AlertDialog.Builder#setNegativeButton(CharSequence, DialogInterface.OnClickListener)
+     */
+    @Override
+    public void doNoConfirmClick(String input) {
+
+    }
+}

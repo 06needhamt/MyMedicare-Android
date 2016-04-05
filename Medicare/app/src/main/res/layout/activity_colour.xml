@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnGreen"
         android:text="@string/green"
+        android:background="@color/bg_Green"
         android:layout_gravity="center_horizontal|top"/>
 
     <Button
@@ -40,6 +41,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnBlue"
         android:text="@string/blue"
+        android:background="@color/bg_Blue"
         android:layout_gravity="center_horizontal|top"/>
 
     <Button

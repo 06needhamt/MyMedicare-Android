@@ -2,6 +2,9 @@
 <manifest package="com.needham.thomas.medicare"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -32,6 +35,8 @@
         <activity android:name=".root.Activities.FontSizeActivity">
         </activity>
         <activity android:name=".root.Activities.ColourActivity">
+        </activity>
+        <activity android:name=".root.Activities.SendTextActivity">
         </activity>
     </application>
 

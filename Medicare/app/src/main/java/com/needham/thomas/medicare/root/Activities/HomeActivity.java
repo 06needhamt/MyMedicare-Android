@@ -1,7 +1,17 @@
 package com.needham.thomas.medicare.root.Activities;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.os.Build;
+import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -16,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.needham.thomas.medicare.R;
+import com.needham.thomas.medicare.root.Classes.Contact;
 import com.needham.thomas.medicare.root.Classes.IAppConstants;
 import com.needham.thomas.medicare.root.Classes.User;
 import com.needham.thomas.medicare.root.Classes.UserDetails;
@@ -24,6 +35,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.security.Permission;
+import java.util.ArrayList;
 
 public class HomeActivity extends FragmentActivity implements IAppConstants {
 
@@ -36,7 +49,8 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
     Button btnCustomize;
     Button btnAdminControl;
     Button btnLogout;
-
+    Button btnSendText;
+    ArrayList<Contact> contacts;
     private String currentUser;
 
 
@@ -78,24 +92,95 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         btnCustomize = (Button) findViewById(R.id.btnCustomise);
         btnAdminControl = (Button) findViewById(R.id.btnAdminControl);
         btnLogout = (Button) findViewById(R.id.btnLogout);
+        btnSendText = (Button) findViewById(R.id.btnSendText);
         SetupTitleLayout();
         SetupNewRecordLayout();
         SetupViewRecordLayout();
         SetupCustomizeLayout();
         SetupAdminControlLayout();
+        SetupLogoutLayout();
+        SetupSendTextLayout();
         SetupNewRecordOnClick();
         SetupViewRecordOnClick();
         SetupCutomiseOnClick();
         SetupAdminControlOnClick();
-        SetupLogoutLayout();
         SetupLogoutOnClick();
+        SetupSendTextOnClick();
         ApplyUserSettings();
     }
+
+    private ArrayList<Contact> GetContactsList() {
+        ArrayList<Contact> contacts = new ArrayList<>();
+        Cursor cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
+        assert cursor != null;
+        while (cursor.moveToNext())
+        {
+            String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+            String phoneNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            Contact contact = new Contact(name,phoneNumber);
+            contacts.add(contact);
+        }
+        cursor.close();
+        return contacts;
+    }
+
+    private void SetupSendTextOnClick() {
+        btnSendText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("text", "Send Text button Clicked");
+                contacts = GetContactsList();
+                Bundle b = new Bundle();
+                b.putString(FROM_KEY, "HomeActivity");
+                b.putString(USER_NAME_KEY, currentUser);
+                b.putParcelableArrayList(CONTACTS_LIST_KEY, contacts);
+                Intent i = new Intent(getBaseContext(),SendTextActivity.class);
+                i.putExtras(b);
+                startActivity(i);
+            }
+        });
+    }
+
+    //This is required for Android Marshmallow API 23+ to request permissions.
+    // I could not get it working so I downgraded the app to Lollipop API 22 for now
+
+//    private void AskForPermission() {
+//        // Here, thisActivity is the current activity
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+//
+//            // Should we show an explanation?
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CONTACTS)) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+//                builder.setTitle("Contacts access needed");
+//                builder.setPositiveButton(android.R.string.ok, null);
+//                builder.setMessage("please confirm Contacts access");
+//                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                    @TargetApi(Build.VERSION_CODES.M)
+//                    @Override
+//                    public void onDismiss(DialogInterface dialog) {
+//                        requestPermissions(
+//                                new String[]
+//                                        {Manifest.permission.READ_CONTACTS}
+//                                , MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+//                    }
+//                });
+//            }
+//            else {
+//                // No explanation needed, we can request the permission.
+//
+//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS},
+//                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+//
+//            }
+//        }
+//        if(checkSelfPermission(Manifest.permission.READ_CONTACTS) == (int) PackageManager.PERMISSION_GRANTED)
+//        contacts = GetContactsList();
+//    }
 
     /**
      * On Click listener for the logout button
      */
-    private void SetupLogoutOnClick() {
+    private synchronized void SetupLogoutOnClick() {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,31 +258,6 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         });
     }
 
-    /**
-     * This function sets up the layout for the admin control button
-     */
-    private void SetupAdminControlLayout() {
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
-        params.gravity = Gravity.CENTER_HORIZONTAL;
-        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
-        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
-        params.topMargin = (int) (height * 0.60);
-        btnAdminControl.setGravity(Gravity.CENTER);
-        btnAdminControl.setLayoutParams(params);
-    }
-
-    /**
-     * This function sets up the layout for the logout button
-     */
-    private void SetupLogoutLayout() {
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
-        params.gravity = Gravity.CENTER_HORIZONTAL;
-        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
-        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
-        params.topMargin = (int) (height * 0.75);
-        btnLogout.setGravity(Gravity.CENTER);
-        btnLogout.setLayoutParams(params);
-    }
 
     /**
      * This function applies the users chosen customised settings
@@ -216,10 +276,12 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
                     btnLogout.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
                 }
                 if(u.getBackgroundColour() != 0){
-                    getWindow().getDecorView().setBackgroundColor(getResources().getColor(u.getBackgroundColour()));
+                    FrameLayout layout = (FrameLayout) findViewById(R.id.homeRoot);
+                    layout.setBackgroundColor(getResources().getColor(u.getBackgroundColour()));
                 }
                 if(u.getFontColour() != 0){
                     title.setTextColor(getResources().getColor(u.getFontColour()));
+                    btnNewRecord.setTextColor(getResources().getColor(u.getFontColour()));
                     btnAdminControl.setTextColor(getResources().getColor(u.getFontColour()));
                     btnViewRecords.setTextColor(getResources().getColor(u.getFontColour()));
                     btnCustomize.setTextColor(getResources().getColor(u.getFontColour()));
@@ -230,6 +292,40 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         }
     }
 
+    private void SetupSendTextLayout(){
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
+        params.topMargin = (int) (height * 0.60);
+        btnSendText.setGravity(Gravity.CENTER);
+        btnSendText.setLayoutParams(params);
+    }
+
+    /**
+     * This function sets up the layout for the logout button
+     */
+    private void SetupLogoutLayout() {
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
+        params.topMargin = (int) (height * 0.50);
+        btnLogout.setGravity(Gravity.CENTER);
+        btnLogout.setLayoutParams(params);
+    }
+    /**
+     * This function sets up the layout for the admin control button
+     */
+    private void SetupAdminControlLayout() {
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
+        params.topMargin = (int) (height * 0.40);
+        btnAdminControl.setGravity(Gravity.CENTER);
+        btnAdminControl.setLayoutParams(params);
+    }
     /**
      * This function sets up the layout for the customise layout button
      */
@@ -238,23 +334,12 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         params.gravity = Gravity.CENTER_HORIZONTAL;
         params.width = FrameLayout.LayoutParams.MATCH_PARENT;
         params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
-        params.topMargin = (int) (height * 0.45);
+        params.topMargin = (int) (height * 0.30);
         btnCustomize.setGravity(Gravity.CENTER);
         btnCustomize.setLayoutParams(params);
     }
 
-    /**
-     * This function sets up the layout for the new record button
-     */
-    private void SetupNewRecordLayout() {
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
-        params.gravity = Gravity.CENTER_HORIZONTAL;
-        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
-        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
-        params.topMargin = (int) (height * 0.15);
-        btnNewRecord.setGravity(Gravity.CENTER);
-        btnNewRecord.setLayoutParams(params);
-    }
+
 
     /**
      * This function sets up the layout for the view record button
@@ -264,11 +349,22 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         params.gravity = Gravity.CENTER_HORIZONTAL;
         params.width = FrameLayout.LayoutParams.MATCH_PARENT;
         params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
-        params.topMargin = (int) (height * 0.30);
+        params.topMargin = (int) (height * 0.20);
         btnViewRecords.setGravity(Gravity.CENTER);
         btnViewRecords.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the layout for the new record button
+     */
+    private void SetupNewRecordLayout() {
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
+        params.topMargin = (int) (height * 0.10);
+        btnNewRecord.setGravity(Gravity.CENTER);
+        btnNewRecord.setLayoutParams(params);
+    }
     /**
      * This function sets up the layout for the title
      */

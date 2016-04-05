@@ -9,36 +9,41 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/White"
-    android:id="@+id/customisationRoot"
-    tools:context="com.needham.thomas.medicare.root.Activities.CustomisationActivity">
+    android:id="@+id/sendTextRoot"
+    tools:context="com.needham.thomas.medicare.root.Activities.SendTextActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/customisation_Title"
-        android:id="@+id/customisation_Title"
+        android:text="@string/send_text"
+        android:id="@+id/sendTextTitle"
         android:textSize="26sp"
         android:textColor="@color/Black"
         android:layout_gravity="center_horizontal|top"/>
 
-    <Button
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/font_size"
-        android:id="@+id/btnFontSize"
-        android:layout_gravity="center_horizontal|top"/>
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/txtRecipientName"
+        android:layout_gravity="center_horizontal|top"
+        android:hint="@string/recipient_name_hint"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/txtMessageBody"
+        android:layout_gravity="center_horizontal|top"
+        android:hint="@string/your_message_hint"
+        android:scrollbars="vertical"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/font_colour"
-        android:id="@+id/btnFontColour"
-        android:layout_gravity="center_horizontal|top"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/background_colour"
-        android:id="@+id/btnBackgroundColour"
+        android:text="@string/send_message"
+        android:id="@+id/btnSendTextMessage"
         android:layout_gravity="center_horizontal|top"/>
 </FrameLayout>

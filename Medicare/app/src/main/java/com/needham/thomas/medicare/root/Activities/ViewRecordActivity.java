@@ -54,6 +54,8 @@ public class ViewRecordActivity extends FragmentActivity implements IAppConstant
         GetDisplayMetrics(dm);
         UnpackBundle();
         SetupViews();
+
+
     }
 
     /**
@@ -83,6 +85,7 @@ public class ViewRecordActivity extends FragmentActivity implements IAppConstant
         SetupRecordListLayout();
         PopulateListView();
         SetupListItemClickListener();
+        ApplyUserSettings();
     }
 
     /**
@@ -108,6 +111,55 @@ public class ViewRecordActivity extends FragmentActivity implements IAppConstant
                 "Are You Sure You Want To Delete This Record?", this);
         fragment.show(getFragmentManager(), "dialog");
 
+    }
+
+    /**
+     * This function reads the list of users from the file
+     * @return the list of users or null if an error occurred
+     */
+    private UserDetails ReadUsers() {
+        try {
+            File file = new File(getFilesDir(), USER_FILE_NAME);
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            return (UserDetails) objectInputStream.readObject();
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+            Log.e("ReadAppointment", "An error occurred while reading the appointment from the file");
+        }
+        catch (ClassNotFoundException cls)
+        {
+            cls.printStackTrace();
+            Log.e("ReadAppointment", "Class Not Found");
+            throw new Error("Class Not Found");
+        }
+        catch (NullPointerException npe)
+        {
+            npe.printStackTrace();
+        }
+        return null;
+    }
+    private void ApplyUserSettings() {
+        UserDetails users = ReadUsers();
+        assert users != null;
+        assert users.getUserinfo() != null;
+        for (User u : users.getUserinfo()) {
+            if (u.getUserName().equals(currentUser)) {
+                if (u.getFontSize() != 0.0f) {
+                    // here in case elements are added
+                }
+                if (u.getBackgroundColour() != 0) {
+                    FrameLayout layout = (FrameLayout) findViewById(R.id.viewRecordRoot);
+                    layout.setBackgroundColor(getResources().getColor(u.getBackgroundColour()));
+                }
+                if (u.getFontColour() != 0) {
+                    title.setTextColor(getResources().getColor(u.getFontColour()));
+                }
+                break;
+            }
+        }
     }
 
     /**

@@ -75,6 +75,7 @@ public class CustomisationActivity extends FragmentActivity implements IAppConst
         SetupFontSizeOnClick();
         SetupFontColourOnClick();
         SetupBackgroundColourOnClick();
+        ApplyUserSettings();
     }
     /**
      * This function reads the list of users from the file
@@ -116,7 +117,8 @@ public class CustomisationActivity extends FragmentActivity implements IAppConst
                     btnFontColour.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
                 }
                 if (u.getBackgroundColour() != 0) {
-                    getWindow().getDecorView().setBackgroundColor(getResources().getColor(u.getBackgroundColour()));
+                    FrameLayout layout = (FrameLayout) findViewById(R.id.customisationRoot);
+                    layout.setBackgroundColor(getResources().getColor(u.getBackgroundColour()));
                 }
                 if (u.getFontColour() != 0) {
                     title.setTextColor(getResources().getColor(u.getFontColour()));
@@ -136,6 +138,13 @@ public class CustomisationActivity extends FragmentActivity implements IAppConst
             @Override
             public void onClick(View v) {
                 Log.e("customisation", "Background Colour button Clicked");
+                Bundle b = new Bundle();
+                b.putString(FROM_KEY,"CustomisationActivity");
+                b.putString(USER_NAME_KEY,currentUser);
+                b.putString(COLOUR_TYPE_KEY, BACKGROUND_COLOUR_TYPE);
+                Intent i = new Intent(getBaseContext(),ColourActivity.class);
+                i.putExtras(b);
+                startActivity(i);
             }
         });
     }
@@ -147,6 +156,13 @@ public class CustomisationActivity extends FragmentActivity implements IAppConst
             @Override
             public void onClick(View v) {
                 Log.e("customisation", "Font Colour button Clicked");
+                Bundle b = new Bundle();
+                b.putString(FROM_KEY,"CustomisationActivity");
+                b.putString(USER_NAME_KEY,currentUser);
+                b.putString(COLOUR_TYPE_KEY, FONT_COLOUR_TYPE);
+                Intent i = new Intent(getBaseContext(),ColourActivity.class);
+                i.putExtras(b);
+                startActivity(i);
             }
         });
     }

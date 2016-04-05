@@ -46,5 +46,9 @@
     <string name="red"> Red</string>
     <string name="green"> Green</string>
     <string name="blue"> Blue</string>
+    <string name="send_text">Send Text to Nurse</string>
+    <string name="recipient_name_hint"> Recipient Name...</string>
+    <string name="your_message_hint"> Your Message...</string>
+    <string name="send_message"> Send Message</string>
 
 </resources>
