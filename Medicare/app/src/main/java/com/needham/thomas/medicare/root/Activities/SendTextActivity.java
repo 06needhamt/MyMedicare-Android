@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -87,6 +88,35 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
         SetupSendButtonLayout();
         SetupSendButtonOnClick();
         GetNurseContact();
+        ApplyUserSettings();
+    }
+    /**
+     * This function applies the current user's chosen customisation settings
+     */
+    private void ApplyUserSettings() {
+        UserDetails users = ReadUsers();
+        assert users != null;
+        assert users.getUserinfo() != null;
+        for (User u : users.getUserinfo()) {
+            if (u.getUserName().equals(currentUser)) {
+                if (u.getFontSize() != 0.0f) {
+                    txtRecipientInfo.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
+                    txtMessageBody.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
+                    btnSend.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
+                }
+                if (u.getBackgroundColour() != 0) {
+                    FrameLayout layout = (FrameLayout) findViewById(R.id.sendTextRoot);
+                    layout.setBackgroundColor(getResources().getColor(u.getBackgroundColour()));
+                }
+                if (u.getFontColour() != 0) {
+                    title.setTextColor(getResources().getColor(u.getFontColour()));
+                    txtRecipientInfo.setTextColor(getResources().getColor(u.getFontColour()));
+                    txtMessageBody.setTextColor(getResources().getColor(u.getFontColour()));
+                    btnSend.setTextColor(getResources().getColor(u.getFontColour()));
+                }
+                break;
+            }
+        }
     }
 
     /**

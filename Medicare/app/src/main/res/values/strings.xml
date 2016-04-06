@@ -51,7 +51,7 @@
     <string name="your_message_hint"> Your Message...</string>
     <string name="send_message"> Send Message</string>
     <string name="modify_title">Modify Your Details</string>
-    <string name="modify_personal_info">Modify Your Personal Info</string>
+    <string name="modify_personal_info">Modify Your Info</string>
     <string name="admin_control_title"> Admin Control Panel</string>
     <string name="view_all_records"> View All Records</string>
     <string name="reset_password"> Reset Password</string>

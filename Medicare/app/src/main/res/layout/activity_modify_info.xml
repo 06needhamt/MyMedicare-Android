@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/White"
-    android:id="@+id/ModifyInfoRoot"
+    android:id="@+id/modifyInfoRoot"
     tools:context=".root.Activities.ModifyInfoActivity">
     <TextView
         android:layout_width="wrap_content"

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -55,6 +56,9 @@ public class ViewUsersActivity extends FragmentActivity implements IAppConstants
         SetupViews();
     }
 
+    /**
+     * This function sets up the user interface for ViewUsersActivity
+     */
     private void SetupViews() {
         title = (TextView) findViewById(R.id.viewUsersTitle);
         lstUsers = (ListView) findViewById(R.id.lstUsersList);
@@ -62,8 +66,33 @@ public class ViewUsersActivity extends FragmentActivity implements IAppConstants
         SetupUsersListLayout();
         SetupListItemClickListener();
         PopulateList();
+        ApplyUserSettings();
     }
 
+    private void ApplyUserSettings() {
+        UserDetails users = ReadUsers();
+        assert users != null;
+        assert users.getUserinfo() != null;
+        for (User u : users.getUserinfo()) {
+            if (u.getUserName().equals("admin")) {
+                if (u.getFontSize() != 0.0f) {
+                    // here in case items are added
+                }
+                if (u.getBackgroundColour() != 0) {
+                    FrameLayout layout = (FrameLayout) findViewById(R.id.viewUsersRoot);
+                    layout.setBackgroundColor(getResources().getColor(u.getBackgroundColour()));
+                }
+                if (u.getFontColour() != 0) {
+                    title.setTextColor(getResources().getColor(u.getFontColour()));
+                }
+                break;
+            }
+        }
+    }
+
+    /**
+     * Populates the list view with the entries from the user file
+     */
     private void PopulateList() {
         UserDetails userDetails = ReadUsers();
         assert userDetails != null;
