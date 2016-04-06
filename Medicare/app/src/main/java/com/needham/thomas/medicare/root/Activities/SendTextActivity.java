@@ -52,6 +52,9 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
         SetupViews();
     }
 
+    /**
+     * This function unpacks the bundle containing the username of the currently logged in user and contacts list
+     */
     private void UnpackBundle() {
         Bundle b = getIntent().getExtras();
         if(b == null)
@@ -68,9 +71,11 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
         }
         else
             throw new Error("Invalid bundle Found");
-        // password and other details will be needed later
     }
 
+    /**
+     * This function sets up the user interface for the SendTextActivity
+     */
     private void SetupViews() {
         title = (TextView) findViewById(R.id.sendTextTitle);
         txtRecipientInfo = (EditText) findViewById(R.id.txtRecipientInfo);
@@ -84,6 +89,10 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
         GetNurseContact();
     }
 
+    /**
+     *This function gets the contact with the name specified in the users nurse name.
+     * @return the contact with the name specified in the users nurse name.
+     */
     private Contact GetNurseContact() {
         UserDetails users = ReadUsers();
         assert users != null;
@@ -125,25 +134,12 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
         }
         return null;
     }
-    private void SetupSendButtonOnClick() {
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("send message", "Send message button clicked");
-                Contact reciever = GetContactFromName();
-                if(reciever == null)
-                    throw new Error("Invalid contact name or number " + txtRecipientInfo.getText().toString());
-                SmsManager smsManager = SmsManager.getDefault();
-                String messageBody = txtMessageBody.getText().toString();
-                Log.e("message", messageBody);
-                smsManager.sendTextMessage(reciever.getPhoneNumber(), null, messageBody, null, null);
-                Toast.makeText(getBaseContext(),"Message Successfully Sent To " + reciever.getName(),Toast.LENGTH_LONG).show();
-                finish();
-            }
-        });
-    }
 
-    private Contact GetContactFromName() {
+    /**
+     * This function gets a contact from a name or phone number
+     * @return the contact with this name or number or null if no contact exists
+     */
+    private Contact GetContactFromNameOrNumber() {
         for(Contact c : contacts){
             if(c.getName().equals(txtRecipientInfo.getText().toString()) ||
                     c.getPhoneNumber().equals(txtRecipientInfo.getText().toString())){
@@ -153,6 +149,42 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
         return null;
     }
 
+    /**
+     * On Click listener for the send message button
+     */
+    private void SetupSendButtonOnClick() {
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("send message", "Send message button clicked");
+                Contact reciever = GetContactFromNameOrNumber();
+                if (reciever == null) {
+                    ShowInvalidContactDialog();
+                    return;
+                }
+                SmsManager smsManager = SmsManager.getDefault();
+                String phoneNumber = reciever.getPhoneNumber();
+                String messageBody = txtMessageBody.getText().toString();
+                Log.e("message", messageBody);
+                smsManager.sendTextMessage(phoneNumber, null, messageBody, null, null);
+                Toast.makeText(getBaseContext(), "Message Successfully Sent To " + reciever.getName(), Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+    }
+
+    /**
+     * This function shows a dialog informing the user that they have entered invalid contact information
+     */
+    private void ShowInvalidContactDialog() {
+        InvalidInputDialogFragment fragment = new InvalidInputDialogFragment("Invalid contact name or number " +
+                txtRecipientInfo.getText().toString(), this);
+        fragment.show(getFragmentManager(),"dia");
+    }
+
+    /**
+     * This function sets up the layout for the send message button
+     */
     private void SetupSendButtonLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -162,7 +194,9 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
         btnSend.setGravity(Gravity.CENTER);
         btnSend.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the layout for the message body edit text
+     */
     private void SetupMessageBodyLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -173,7 +207,9 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
         txtMessageBody.setBackground(new ListViewBorder(new RectShape()));
         txtMessageBody.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the layout for the recipients name edit text
+     */
     private void SetupRecipientsNameLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -184,6 +220,9 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
         txtRecipientInfo.setLayoutParams(params);
     }
 
+    /**
+     * This function sets up the layout for the title text view
+     */
     private void SetupTitleLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;

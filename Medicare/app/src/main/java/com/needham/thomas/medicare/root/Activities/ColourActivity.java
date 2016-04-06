@@ -62,7 +62,6 @@ public class ColourActivity extends FragmentActivity implements IAppConstants {
         }
         else
             throw new Error("Invalid bundle Found");
-        // password and other details will be needed later
     }
 
     private void SetupViews() {

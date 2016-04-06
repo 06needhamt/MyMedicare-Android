@@ -79,7 +79,6 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         }
         else
             throw new Error("Invalid bundle Found");
-        // password and other details will be needed later
     }
 
     /**
@@ -110,8 +109,8 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
     }
 
     /**
-     * 
-     * @return
+     * This function gets all of the contacts from the phone's address book
+     * @return a list containing all of the contacts on the phone
      */
     private ArrayList<Contact> GetContactsList() {
         ArrayList<Contact> contacts = new ArrayList<>();
@@ -128,28 +127,10 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         return contacts;
     }
 
-    private void SetupSendTextOnClick() {
-        btnSendText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("text", "Send Text button Clicked");
-                contacts = GetContactsList();
-                Bundle b = new Bundle();
-                b.putString(FROM_KEY, "HomeActivity");
-                b.putString(USER_NAME_KEY, currentUser);
-                b.putParcelableArrayList(CONTACTS_LIST_KEY, contacts);
-                Intent i = new Intent(getBaseContext(),SendTextActivity.class);
-                i.putExtras(b);
-                startActivity(i);
-            }
-        });
-    }
-
     //This is required for Android Marshmallow API 23+ to request permissions.
     // I could not get it working so I downgraded the app to Lollipop API 22 for now
 
 //    private void AskForPermission() {
-//        // Here, thisActivity is the current activity
 //        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
 //
 //            // Should we show an explanation?
@@ -180,6 +161,26 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
 //        if(checkSelfPermission(Manifest.permission.READ_CONTACTS) == (int) PackageManager.PERMISSION_GRANTED)
 //        contacts = GetContactsList();
 //    }
+
+    /**
+     * On click listener for the send text button
+     */
+    private void SetupSendTextOnClick() {
+        btnSendText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("text", "Send Text button Clicked");
+                contacts = GetContactsList();
+                Bundle b = new Bundle();
+                b.putString(FROM_KEY, "HomeActivity");
+                b.putString(USER_NAME_KEY, currentUser);
+                b.putParcelableArrayList(CONTACTS_LIST_KEY, contacts);
+                Intent i = new Intent(getBaseContext(),SendTextActivity.class);
+                i.putExtras(b);
+                startActivity(i);
+            }
+        });
+    }
 
     /**
      * On Click listener for the logout button
@@ -298,6 +299,9 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         }
     }
 
+    /**
+     * This function sets up the layout for the send text button
+     */
     private void SetupSendTextLayout(){
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;

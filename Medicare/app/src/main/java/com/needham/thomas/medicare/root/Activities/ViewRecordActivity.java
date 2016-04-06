@@ -72,7 +72,6 @@ public class ViewRecordActivity extends FragmentActivity implements IAppConstant
         }
         else
             throw new Error("Invalid bundle Found");
-        // password and other details will be needed later
     }
 
     /**
