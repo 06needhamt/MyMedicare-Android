@@ -46,6 +46,18 @@ public class AdminControlPanelActivity extends FragmentActivity implements IAppC
         SetupViewAllUsersLayout();
         SetupViewAllRecordsOnClick();
         SetupResetPasswordOnClick();
+        SetupViewAllUsersOnClick();
+    }
+
+    private void SetupViewAllUsersOnClick() {
+        btnViewAllUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("Admin", "View Users Button Clicked");
+                Intent i = new Intent(getBaseContext(), ViewUsersActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void SetupResetPasswordOnClick() {

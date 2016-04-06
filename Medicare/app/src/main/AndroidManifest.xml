@@ -44,6 +44,8 @@
         </activity>
         <activity android:name=".root.Activities.ResetPasswordActivity">
         </activity>
+        <activity android:name=".root.Activities.ViewUsersActivity">
+        </activity>
     </application>
 
 </manifest>

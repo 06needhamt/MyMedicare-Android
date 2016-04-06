@@ -131,4 +131,16 @@ public class User implements Serializable{
     public void setBackgroundColour(int backgroundColour) {
         this.backgroundColour = backgroundColour;
     }
+
+    @Override
+    public String toString() {
+        return "Username " + userName + "\n" +
+                "First Name " + firstName + "\n" +
+                "Last Name " + lastName + "\n" +
+                "Age " + age + "\n" +
+                "Address 1" + address1 + "\n" +
+                "Address 2 " + address2 + "\n" +
+                "Phone Number " + phoneNumber + "\n" +
+                "Nurse Name " + nurseName + "\n";
+    }
 }
