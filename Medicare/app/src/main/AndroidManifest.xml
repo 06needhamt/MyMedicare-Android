@@ -38,6 +38,12 @@
         </activity>
         <activity android:name=".root.Activities.SendTextActivity">
         </activity>
+        <activity android:name=".root.Activities.ModifyInfoActivity">
+        </activity>
+        <activity android:name=".root.Activities.AdminControlPanelActivity">
+        </activity>
+        <activity android:name=".root.Activities.ResetPasswordActivity">
+        </activity>
     </application>
 
 </manifest>

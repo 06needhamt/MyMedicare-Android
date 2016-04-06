@@ -65,7 +65,8 @@ public class ViewRecordActivity extends FragmentActivity implements IAppConstant
         Bundle b = getIntent().getExtras();
         if(b == null)
             throw new Error("null bundle found");
-        if(b.getString(FROM_KEY,"").equals("HomeActivity")){
+        if(b.getString(FROM_KEY,"").equals("HomeActivity") ||
+                b.getString(FROM_KEY,"").equals("AdminControlPanelActivity")){
             currentUser = b.getString(USER_NAME_KEY,"");
             if(currentUser.equals(""))
                 throw new Error("Invalid user logged in");

@@ -63,4 +63,11 @@
         android:id="@+id/btnLogout"
         android:layout_gravity="center_horizontal|top"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/modify_personal_info"
+        android:id="@+id/btnModifyInfo"
+        android:layout_gravity="center_horizontal|top"/>
+
 </FrameLayout>

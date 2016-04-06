@@ -30,6 +30,8 @@ import com.needham.thomas.medicare.root.Classes.Contact;
 import com.needham.thomas.medicare.root.Classes.IAppConstants;
 import com.needham.thomas.medicare.root.Classes.User;
 import com.needham.thomas.medicare.root.Classes.UserDetails;
+import com.needham.thomas.medicare.root.dialogs.IConfirmInputDialogCompliant;
+import com.needham.thomas.medicare.root.dialogs.InvalidInputDialogFragment;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,7 +40,7 @@ import java.io.ObjectInputStream;
 import java.security.Permission;
 import java.util.ArrayList;
 
-public class HomeActivity extends FragmentActivity implements IAppConstants {
+public class HomeActivity extends FragmentActivity implements IAppConstants, IConfirmInputDialogCompliant {
 
     int width;
     int height;
@@ -47,6 +49,7 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
     Button btnNewRecord;
     Button btnViewRecords;
     Button btnCustomize;
+    Button btnModifyInfo;
     Button btnAdminControl;
     Button btnLogout;
     Button btnSendText;
@@ -89,6 +92,7 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         btnNewRecord = (Button) findViewById(R.id.btnNewReading);
         btnViewRecords = (Button) findViewById(R.id.btn_ViewReadings);
         btnCustomize = (Button) findViewById(R.id.btnCustomise);
+        btnModifyInfo = (Button) findViewById(R.id.btnModifyInfo);
         btnAdminControl = (Button) findViewById(R.id.btnAdminControl);
         btnLogout = (Button) findViewById(R.id.btnLogout);
         btnSendText = (Button) findViewById(R.id.btnSendText);
@@ -96,12 +100,14 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         SetupNewRecordLayout();
         SetupViewRecordLayout();
         SetupCustomizeLayout();
+        SetupModifyInfoLayout();
         SetupAdminControlLayout();
         SetupLogoutLayout();
         SetupSendTextLayout();
         SetupNewRecordOnClick();
         SetupViewRecordOnClick();
         SetupCutomiseOnClick();
+        SetupModifyInfoOnClick();
         SetupAdminControlOnClick();
         SetupLogoutOnClick();
         SetupSendTextOnClick();
@@ -205,10 +211,37 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
             @Override
             public void onClick(View v) {
                 Log.e("Home", "Admin Control Button Clicked");
+                if(!currentUser.equals("admin")){
+                    ShowUnauthorisedDialog();
+                    return;
+                }
+                Intent i = new Intent(getBaseContext(),AdminControlPanelActivity.class);
+                startActivity(i);
             }
         });
     }
 
+    private void ShowUnauthorisedDialog() {
+        InvalidInputDialogFragment fragment = new InvalidInputDialogFragment(
+                "You are not authorised to use the admin control",this);
+        fragment.show(getFragmentManager(),"dia");
+    }
+
+
+    private void SetupModifyInfoOnClick() {
+        btnModifyInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("Home", "Modify Info Button Clicked");
+                Bundle b = new Bundle();
+                b.putString(FROM_KEY,"HomeActivity");
+                b.putString(USER_NAME_KEY, currentUser);
+                Intent i = new Intent(getBaseContext(), ModifyInfoActivity.class);
+                i.putExtras(b);
+                startActivity(i);
+            }
+        });
+    }
     /**
      * On click listener for the customise button
      */
@@ -278,6 +311,7 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
                     btnAdminControl.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
                     btnViewRecords.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
                     btnCustomize.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
+                    btnModifyInfo.setTextSize(TypedValue.COMPLEX_UNIT_PX, u.getFontSize());
                     btnSendText.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
                     btnLogout.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
                 }
@@ -291,6 +325,7 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
                     btnAdminControl.setTextColor(getResources().getColor(u.getFontColour()));
                     btnViewRecords.setTextColor(getResources().getColor(u.getFontColour()));
                     btnCustomize.setTextColor(getResources().getColor(u.getFontColour()));
+                    btnModifyInfo.setTextColor(getResources().getColor(u.getFontColour()));
                     btnSendText.setTextColor(getResources().getColor(u.getFontColour()));
                     btnLogout.setTextColor(getResources().getColor(u.getFontColour()));
                 }
@@ -298,7 +333,18 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
             }
         }
     }
-
+    /**
+     * This function sets up the layout for the logout button
+     */
+    private void SetupLogoutLayout() {
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
+        params.topMargin = (int) (height * 0.70);
+        btnLogout.setGravity(Gravity.CENTER);
+        btnLogout.setLayoutParams(params);
+    }
     /**
      * This function sets up the layout for the send text button
      */
@@ -313,18 +359,6 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
     }
 
     /**
-     * This function sets up the layout for the logout button
-     */
-    private void SetupLogoutLayout() {
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
-        params.gravity = Gravity.CENTER_HORIZONTAL;
-        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
-        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
-        params.topMargin = (int) (height * 0.50);
-        btnLogout.setGravity(Gravity.CENTER);
-        btnLogout.setLayoutParams(params);
-    }
-    /**
      * This function sets up the layout for the admin control button
      */
     private void SetupAdminControlLayout() {
@@ -332,9 +366,19 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         params.gravity = Gravity.CENTER_HORIZONTAL;
         params.width = FrameLayout.LayoutParams.MATCH_PARENT;
         params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
-        params.topMargin = (int) (height * 0.40);
+        params.topMargin = (int) (height * 0.50);
         btnAdminControl.setGravity(Gravity.CENTER);
         btnAdminControl.setLayoutParams(params);
+    }
+
+    private void SetupModifyInfoLayout() {
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+        params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
+        params.topMargin = (int) (height * 0.40);
+        btnModifyInfo.setGravity(Gravity.CENTER);
+        btnModifyInfo.setLayoutParams(params);
     }
     /**
      * This function sets up the layout for the customise layout button
@@ -425,5 +469,27 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         this.getWindowManager().getDefaultDisplay().getMetrics(dm);
         width = dm.widthPixels;
         height = dm.heightPixels;
+    }
+
+    /**
+     * This method is called when the positive button is pressed on the dialog Fragment
+     *
+     * @param input the input entered into the dialog fragment by the user
+     * @see AlertDialog.Builder#setPositiveButton(CharSequence, DialogInterface.OnClickListener)
+     */
+    @Override
+    public void doYesConfirmClick(String input) {
+
+    }
+
+    /**
+     * This method is called when the negative button is pressed on the dialog Fragment
+     *
+     * @param input the input entered into the dialog fragment by the user
+     * @see AlertDialog.Builder#setNegativeButton(CharSequence, DialogInterface.OnClickListener)
+     */
+    @Override
+    public void doNoConfirmClick(String input) {
+
     }
 }
