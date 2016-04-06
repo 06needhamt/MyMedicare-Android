@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +49,9 @@ public class ResetPasswordActivity extends FragmentActivity implements IAppConst
         SetupViews();
     }
 
+    /**
+     * This function sets up the user interface for the reset password button
+     */
     private void SetupViews() {
         title = (TextView) findViewById(R.id.ResetPasswordTitle);
         txtUsername = (EditText) findViewById(R.id.txtResetPasswordUsername);
@@ -60,7 +64,14 @@ public class ResetPasswordActivity extends FragmentActivity implements IAppConst
         SetupReEnterPasswordLayout();
         SetupSubmitLayout();
         SetupSubmitOnClick();
+        ApplyUserSettings();
     }
+
+    /**
+     * This function writes user details to the user file
+     * @param details the details for write
+     * @return whether the operation completed successfully
+     */
     private boolean WriteUserDetails(UserDetails details) {
         try {
             File file = new File(getFilesDir().getAbsolutePath(), USER_FILE_NAME);
@@ -77,6 +88,30 @@ public class ResetPasswordActivity extends FragmentActivity implements IAppConst
             throw new Error("\"An error occurred while writing the user to a file\"");
         }
         return true;
+    }
+    /**
+     * This function applies the current user's chosen customisation settings
+     */
+    private void ApplyUserSettings() {
+        UserDetails users = ReadUsers();
+        assert users != null;
+        assert users.getUserinfo() != null;
+        for (User u : users.getUserinfo()) {
+            if (u.getUserName().equals("admin")) {
+                if (u.getFontSize() != 0.0f) {
+                    btnSubmit.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
+                }
+                if (u.getBackgroundColour() != 0) {
+                    FrameLayout layout = (FrameLayout) findViewById(R.id.resetPasswordRoot);
+                    layout.setBackgroundColor(getResources().getColor(u.getBackgroundColour()));
+                }
+                if (u.getFontColour() != 0) {
+                    title.setTextColor(getResources().getColor(u.getFontColour()));
+                    btnSubmit.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
+                }
+                break;
+            }
+        }
     }
 
     /**
@@ -108,6 +143,9 @@ public class ResetPasswordActivity extends FragmentActivity implements IAppConst
         return null;
     }
 
+    /**
+     * On Click listener for the submit button
+     */
     private void SetupSubmitOnClick() {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +158,10 @@ public class ResetPasswordActivity extends FragmentActivity implements IAppConst
         });
     }
 
+    /**
+     * this function resets a users password
+     * @return whether the operation completed successfully
+     */
     private boolean ResetPassword() {
         String username = txtUsername.getText().toString();
         String password = txtPassword.getText().toString();
@@ -142,6 +184,9 @@ public class ResetPasswordActivity extends FragmentActivity implements IAppConst
         return true;
     }
 
+    /**
+     * This function sets up the layout for the submit button
+     */
     private void SetupSubmitLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -152,6 +197,9 @@ public class ResetPasswordActivity extends FragmentActivity implements IAppConst
         btnSubmit.setLayoutParams(params);
     }
 
+    /**
+     * This function sets up the layout for the re-enter password edit text
+     */
     private void SetupReEnterPasswordLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -161,7 +209,9 @@ public class ResetPasswordActivity extends FragmentActivity implements IAppConst
         txtReEnterPassword.setGravity(Gravity.CENTER);
         txtReEnterPassword.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the layout for the password edit text
+     */
     private void SetupPasswordLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -171,7 +221,9 @@ public class ResetPasswordActivity extends FragmentActivity implements IAppConst
         txtPassword.setGravity(Gravity.CENTER);
         txtPassword.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the layout for the username edit text
+     */
     private void SetupUsernameLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -181,7 +233,9 @@ public class ResetPasswordActivity extends FragmentActivity implements IAppConst
         txtUsername.setGravity(Gravity.CENTER);
         txtUsername.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the layout for the title text view
+     */
     private void SetupTitleLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;

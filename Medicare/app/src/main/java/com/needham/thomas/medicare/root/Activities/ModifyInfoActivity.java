@@ -58,6 +58,9 @@ public class ModifyInfoActivity extends FragmentActivity implements IAppConstant
         SetupViews();
     }
 
+    /**
+     * This function unpacks a bundle containing the currently logged in user's username
+     */
     private void UnpackBundle() {
         Bundle b = getIntent().getExtras();
         if(b == null)
@@ -101,8 +104,36 @@ public class ModifyInfoActivity extends FragmentActivity implements IAppConstant
         SetupSubmitLayout();
         SetupSubmitOnClick();
         PopulateFields();
+        ApplyUserSettings();
     }
 
+    /**
+     * This function applies the current user's chosen customisation settings
+     */
+    private void ApplyUserSettings() {
+        UserDetails users = ReadUsers();
+        assert users != null;
+        assert users.getUserinfo() != null;
+        for (User u : users.getUserinfo()) {
+            if (u.getUserName().equals(currentUser)) {
+                if (u.getFontSize() != 0.0f) {
+                    // here in case elements are added
+                }
+                if (u.getBackgroundColour() != 0) {
+                    FrameLayout layout = (FrameLayout) findViewById(R.id.modifyInfoRoot);
+                    layout.setBackgroundColor(getResources().getColor(u.getBackgroundColour()));
+                }
+                if (u.getFontColour() != 0) {
+                    title.setTextColor(getResources().getColor(u.getFontColour()));
+                }
+                break;
+            }
+        }
+    }
+
+    /**
+     * This function populates the input fields with the current details
+     */
     private void PopulateFields() {
         UserDetails details = ReadUsers();
         assert details != null;
@@ -121,6 +152,8 @@ public class ModifyInfoActivity extends FragmentActivity implements IAppConstant
             }
         }
     }
+
+
 
     /**
      * On click listener for the submit button
@@ -141,6 +174,10 @@ public class ModifyInfoActivity extends FragmentActivity implements IAppConstant
         });
     }
 
+    /**
+     * This function writes the modified user details to the user file
+     * @return whether the operation completed successfully
+     */
     private boolean ModifyUser() {
         UserDetails details = ReadUsers();
         String userName = txtuserName.getText().toString();
@@ -216,6 +253,11 @@ public class ModifyInfoActivity extends FragmentActivity implements IAppConstant
         return false;
     }
 
+    /**
+     * This function writes user details to the user file
+     * @param details the details to write
+     * @return whether the operation completed successfully
+     */
     private boolean WriteUserDetails(UserDetails details) {
         try {
             File file = new File(getFilesDir().getAbsolutePath(), USER_FILE_NAME);

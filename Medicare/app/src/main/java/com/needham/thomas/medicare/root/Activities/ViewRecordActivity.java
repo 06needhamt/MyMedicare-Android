@@ -271,6 +271,9 @@ public class ViewRecordActivity extends FragmentActivity implements IAppConstant
         params.topMargin = (int) (height * 0.01);
         title.setGravity(Gravity.CENTER);
         title.setLayoutParams(params);
+        if(currentUser.equals("admin")){
+            title.setText(R.string.view_all_records);
+        }
     }
 
     /**

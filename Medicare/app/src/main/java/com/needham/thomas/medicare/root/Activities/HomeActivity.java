@@ -221,13 +221,18 @@ public class HomeActivity extends FragmentActivity implements IAppConstants, ICo
         });
     }
 
+    /**
+     * This function shows a dialog if a non admin tries to access the admin control panel
+     */
     private void ShowUnauthorisedDialog() {
         InvalidInputDialogFragment fragment = new InvalidInputDialogFragment(
                 "You are not authorised to use the admin control",this);
         fragment.show(getFragmentManager(),"dia");
     }
 
-
+    /**
+     * On click listener for the modify info button
+     */
     private void SetupModifyInfoOnClick() {
         btnModifyInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -371,6 +376,9 @@ public class HomeActivity extends FragmentActivity implements IAppConstants, ICo
         btnAdminControl.setLayoutParams(params);
     }
 
+    /**
+     * This function sets up the layout for the modify info button
+     */
     private void SetupModifyInfoLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;

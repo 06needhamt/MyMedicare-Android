@@ -110,6 +110,10 @@ public class ColourActivity extends FragmentActivity implements IAppConstants {
         }
         return true;
     }
+
+    /**
+     * On Click listener for the default colour button
+     */
     private void SetupDefaultOnClick() {
         btnDefault.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +138,9 @@ public class ColourActivity extends FragmentActivity implements IAppConstants {
             }
         });
     }
-
+    /**
+     * On Click listener for the blue colour button
+     */
     private void SetuBlueOnClick() {
         btnBlue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +165,9 @@ public class ColourActivity extends FragmentActivity implements IAppConstants {
             }
         });
     }
-
+    /**
+     * On Click listener for the green colour button
+     */
     private void SetupGreenOnClick() {
         btnGreen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,7 +192,9 @@ public class ColourActivity extends FragmentActivity implements IAppConstants {
             }
         });
     }
-
+    /**
+     * On Click listener for the red colour button
+     */
     private void SetupRedOnClick() {
         btnRed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,7 +249,9 @@ public class ColourActivity extends FragmentActivity implements IAppConstants {
         return null;
     }
 
-
+    /**
+     * This function sets up the layout for the default colour button
+     */
     private void SetupDefaultLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -249,7 +261,9 @@ public class ColourActivity extends FragmentActivity implements IAppConstants {
         btnDefault.setGravity(Gravity.CENTER);
         btnDefault.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the layout for the blue colour button
+     */
     private void SetupBlueLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -259,7 +273,9 @@ public class ColourActivity extends FragmentActivity implements IAppConstants {
         btnBlue.setGravity(Gravity.CENTER);
         btnBlue.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the layout for the green colour button
+     */
     private void SetupGreenLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -269,7 +285,9 @@ public class ColourActivity extends FragmentActivity implements IAppConstants {
         btnGreen.setGravity(Gravity.CENTER);
         btnGreen.setLayoutParams(params);
     }
-
+    /**
+     * This function sets up the layout for the red colour button
+     */
     private void SetupRedLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width,height);
         params.gravity = Gravity.CENTER_HORIZONTAL;
