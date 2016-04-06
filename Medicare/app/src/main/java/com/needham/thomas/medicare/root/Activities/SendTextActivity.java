@@ -4,8 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.drawable.shapes.RectShape;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.needham.thomas.medicare.R;
 import com.needham.thomas.medicare.root.Classes.Contact;
@@ -35,7 +36,7 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
     int width;
     int height;
     TextView title;
-    EditText txtRecipientsName;
+    EditText txtRecipientInfo;
     EditText txtMessageBody;
     Button btnSend;
     ArrayList<Contact> contacts;
@@ -72,7 +73,7 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
 
     private void SetupViews() {
         title = (TextView) findViewById(R.id.sendTextTitle);
-        txtRecipientsName = (EditText) findViewById(R.id.txtRecipientName);
+        txtRecipientInfo = (EditText) findViewById(R.id.txtRecipientInfo);
         txtMessageBody = (EditText) findViewById(R.id.txtMessageBody);
         btnSend = (Button) findViewById(R.id.btnSendTextMessage);
         SetupTitleLayout();
@@ -83,17 +84,18 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
         GetNurseContact();
     }
 
-    private void GetNurseContact() {
+    private Contact GetNurseContact() {
         UserDetails users = ReadUsers();
         assert users != null;
         for(User u : users.getUserinfo()){
             for(Contact c : contacts){
                 if(c.getName().equals(u.getNurseName())){
-                    txtRecipientsName.setText(c.getName());
-                    return;
+                    txtRecipientInfo.setText(c.getName());
+                    return c;
                 }
             }
         }
+        return null;
     }
     /**
      * This function reads all currently registered users from the user file
@@ -128,9 +130,27 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
             @Override
             public void onClick(View v) {
                 Log.e("send message", "Send message button clicked");
-
+                Contact reciever = GetContactFromName();
+                if(reciever == null)
+                    throw new Error("Invalid contact name or number " + txtRecipientInfo.getText().toString());
+                SmsManager smsManager = SmsManager.getDefault();
+                String messageBody = txtMessageBody.getText().toString();
+                Log.e("message", messageBody);
+                smsManager.sendTextMessage(reciever.getPhoneNumber(), null, messageBody, null, null);
+                Toast.makeText(getBaseContext(),"Message Successfully Sent To " + reciever.getName(),Toast.LENGTH_LONG).show();
+                finish();
             }
         });
+    }
+
+    private Contact GetContactFromName() {
+        for(Contact c : contacts){
+            if(c.getName().equals(txtRecipientInfo.getText().toString()) ||
+                    c.getPhoneNumber().equals(txtRecipientInfo.getText().toString())){
+                return c;
+            }
+        }
+        return null;
     }
 
     private void SetupSendButtonLayout() {
@@ -138,7 +158,7 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
         params.gravity = Gravity.CENTER_HORIZONTAL;
         params.width = FrameLayout.LayoutParams.MATCH_PARENT;
         params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
-        params.topMargin = (int) (height * 0.75);
+        params.topMargin = (int) (height * 0.80);
         btnSend.setGravity(Gravity.CENTER);
         btnSend.setLayoutParams(params);
     }
@@ -148,8 +168,8 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
         params.gravity = Gravity.CENTER_HORIZONTAL;
         params.width = FrameLayout.LayoutParams.MATCH_PARENT;
         params.height = (int) (height * 0.60);
-        params.topMargin = (int) (height * 0.10);
-        txtMessageBody.setGravity(Gravity.CENTER);
+        params.topMargin = (int) (height * 0.20);
+        txtMessageBody.setGravity(Gravity.START);
         txtMessageBody.setBackground(new ListViewBorder(new RectShape()));
         txtMessageBody.setLayoutParams(params);
     }
@@ -160,8 +180,8 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
         params.width = FrameLayout.LayoutParams.MATCH_PARENT;
         params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
         params.topMargin = (int) (height * 0.10);
-        txtRecipientsName.setGravity(Gravity.CENTER);
-        txtRecipientsName.setLayoutParams(params);
+        txtRecipientInfo.setGravity(Gravity.CENTER);
+        txtRecipientInfo.setLayoutParams(params);
     }
 
     private void SetupTitleLayout() {

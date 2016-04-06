@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/txtRecipientName"
+        android:id="@+id/txtRecipientInfo"
         android:layout_gravity="center_horizontal|top"
         android:hint="@string/recipient_name_hint"/>
 

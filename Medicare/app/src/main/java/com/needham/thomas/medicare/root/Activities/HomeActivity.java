@@ -109,6 +109,10 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
         ApplyUserSettings();
     }
 
+    /**
+     * 
+     * @return
+     */
     private ArrayList<Contact> GetContactsList() {
         ArrayList<Contact> contacts = new ArrayList<>();
         Cursor cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
@@ -273,6 +277,7 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
                     btnAdminControl.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
                     btnViewRecords.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
                     btnCustomize.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
+                    btnSendText.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
                     btnLogout.setTextSize(TypedValue.COMPLEX_UNIT_PX,u.getFontSize());
                 }
                 if(u.getBackgroundColour() != 0){
@@ -285,6 +290,7 @@ public class HomeActivity extends FragmentActivity implements IAppConstants {
                     btnAdminControl.setTextColor(getResources().getColor(u.getFontColour()));
                     btnViewRecords.setTextColor(getResources().getColor(u.getFontColour()));
                     btnCustomize.setTextColor(getResources().getColor(u.getFontColour()));
+                    btnSendText.setTextColor(getResources().getColor(u.getFontColour()));
                     btnLogout.setTextColor(getResources().getColor(u.getFontColour()));
                 }
                 break;
