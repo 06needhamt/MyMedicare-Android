@@ -177,6 +177,8 @@ public class FontSizeActivity extends FragmentActivity implements IAppConstants 
             @Override
             public void onClick(View v) {
                 Log.e("customisation", "Medium Font button Clicked");
+                UserDetails users = ReadUsers();
+                SetFontSize(btnMedium.getTextSize(),users);
             }
         });
     }
@@ -188,6 +190,8 @@ public class FontSizeActivity extends FragmentActivity implements IAppConstants 
             @Override
             public void onClick(View v) {
                 Log.e("customisation", "Small Font button Clicked");
+                UserDetails users = ReadUsers();
+                SetFontSize(btnSmall.getTextSize(),users);
             }
         });
     }

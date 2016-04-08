@@ -12,8 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".root.Activities.MainActivity"
-            android:theme="@android:style/Theme.Holo.NoActionBar">
+            android:name=".root.Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

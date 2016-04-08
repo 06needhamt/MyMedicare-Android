@@ -69,6 +69,9 @@ public class ViewUsersActivity extends FragmentActivity implements IAppConstants
         ApplyUserSettings();
     }
 
+    /**
+     * This function applies the current user's chosen customisation settings
+     */
     private void ApplyUserSettings() {
         UserDetails users = ReadUsers();
         assert users != null;
