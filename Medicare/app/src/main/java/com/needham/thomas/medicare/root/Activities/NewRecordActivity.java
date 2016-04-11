@@ -27,6 +27,7 @@ import com.needham.thomas.medicare.root.Classes.User;
 import com.needham.thomas.medicare.root.Classes.UserDetails;
 import com.needham.thomas.medicare.root.dialogs.IConfirmInputDialogCompliant;
 import com.needham.thomas.medicare.root.dialogs.InvalidInputDialogFragment;
+import com.needham.thomas.medicare.root.dialogs.RiskLevelDialogFragment;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -145,10 +146,14 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
                 if(!WriteRecord(r)){
                     throw new Error("An Error occurred while writing the record to a file");
                 }
-                Toast.makeText(getBaseContext(),"Record successfully saved", Toast.LENGTH_LONG).show();
-                finish();
+                SpawnRiskLevelDialog(r);
             }
         });
+    }
+
+    private void SpawnRiskLevelDialog(Record r) {
+        RiskLevelDialogFragment fragment = new RiskLevelDialogFragment("Your risk level is: " + r.getRiskLevel().name(),this);
+        fragment.show(getFragmentManager(), "dia");
     }
 
     /**
@@ -406,7 +411,8 @@ public class NewRecordActivity extends FragmentActivity implements IAppConstants
      */
     @Override
     public void doYesConfirmClick(String input) {
-
+        Toast.makeText(getBaseContext(),"Record successfully saved", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     /**

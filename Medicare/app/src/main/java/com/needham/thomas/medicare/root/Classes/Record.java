@@ -116,7 +116,8 @@ public class Record implements Serializable, IAppConstants {
             unit = "\u2109";
         else
             unit = "UNKNOWN";
-        return "Temperature " + temperature + " " +  unit + "\n"
+        return "Risk Level " + riskLevel.name() + "\n"
+                + "Temperature " + temperature + " " +  unit + "\n"
                 + "Blood Pressure Low " + bloodPressureLow + "\n"
                 + "Blood Pressure High " + bloodPressureHigh + "\n"
                 + "Heart Rate " + heartRate + " bpm " + "\n"
