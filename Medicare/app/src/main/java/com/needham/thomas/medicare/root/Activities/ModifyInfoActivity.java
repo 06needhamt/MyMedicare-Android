@@ -181,6 +181,11 @@ public class ModifyInfoActivity extends FragmentActivity implements IAppConstant
     private boolean ModifyUser() {
         UserDetails details = ReadUsers();
         String userName = txtuserName.getText().toString();
+        if(!userName.equals(currentUser)){
+            InvalidInputDialogFragment frag = new InvalidInputDialogFragment("User name can not be modified",this);
+            frag.show(getFragmentManager(),"dia");
+            return false;
+        }
         String firstName = txtfirstName.getText().toString();
         String lastName = txtLastName.getText().toString();
         if(txtage.getText().toString().length() == 0){
@@ -250,6 +255,8 @@ public class ModifyInfoActivity extends FragmentActivity implements IAppConstant
                 return true;
             }
         }
+        InvalidInputDialogFragment frag = new InvalidInputDialogFragment("User name can not be modified",this);
+        frag.show(getFragmentManager(),"dia");
         return false;
     }
 
