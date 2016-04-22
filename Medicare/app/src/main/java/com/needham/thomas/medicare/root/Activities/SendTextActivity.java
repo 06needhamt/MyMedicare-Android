@@ -189,6 +189,22 @@ public class SendTextActivity extends FragmentActivity implements IAppConstants,
                 Log.e("send message", "Send message button clicked");
                 Contact reciever = GetContactFromNameOrNumber();
                 if (reciever == null) {
+                    if(txtRecipientInfo.getText().toString().startsWith("0") && txtRecipientInfo.getText().toString().length() == 11){
+                        try{
+                            SmsManager smsManager = SmsManager.getDefault();
+                            String phoneNumber = txtRecipientInfo.getText().toString();
+                            String messageBody = txtMessageBody.getText().toString();
+                            Log.e("message", messageBody);
+                            smsManager.sendTextMessage(phoneNumber, null, messageBody, null, null);
+                            Toast.makeText(getBaseContext(), "Message Successfully Sent To " + txtRecipientInfo.getText().toString(), Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                        catch (IllegalArgumentException ex){
+                            ShowInvalidContactDialog();
+                            return;
+                        }
+                        return;
+                    }
                     ShowInvalidContactDialog();
                     return;
                 }
